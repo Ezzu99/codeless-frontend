@@ -5,11 +5,14 @@ module.exports = {
     extend: {
       backgroundImage: {
         'hero-pattern': "url('./assets/dot-seamless-pattern.svg')",
+        'gradient-gray': "linear-gradient(rgba(31, 41, 55), rgba(55, 65, 81, 0.8))"
       }
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')
+  ],
 }

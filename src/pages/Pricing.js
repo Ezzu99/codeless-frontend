@@ -10,7 +10,7 @@ const Pricing = (props) => {
                     <div className="w-max px-3 text-white text-sm text-center font-semibold bg-indigo-600 rounded-full relative -top-3">
                         <p>MOST POPULAR</p>
                     </div>
-                    <div className="w-full py-4 border-b-2 text-black text-center text-3xl font-bold flex flex-col items-center">
+                    <div className="w-full py-4 border-b-2 bg-white text-black text-center text-3xl font-bold flex flex-col items-center">
                         <p>{props.title}</p>
                         <p className="mt-2 text-lg flex flex-row items-center"><FaDollarSign className="w-6 h-6" /><span className="ml-1 text-5xl font-extrabold">{props.price}</span><span className="ml-2 text-gray-500">/month</span></p>
                     </div>
@@ -23,13 +23,13 @@ const Pricing = (props) => {
                             })
                         }
                         <div className="w-full mt-11 flex flex-row justify-center">
-                            <button className="w-full mx-2 py-2 bg-indigo-600 text-white text-2xl rounded-lg">Subscribe</button>
+                            <button className="w-full mx-2 py-2 bg-indigo-600 text-white text-2xl tracking-wide rounded-lg">Subscribe</button>
                         </div>
                     </div>
                 </div> :
                 (props.isLeft == true) ?
                 <div className="w-80 border-2 border-r-0 rounded-l-lg shadow-lg flex flex-col">
-                    <div className="w-full py-4 border-b-2 text-black text-center text-3xl font-bold flex flex-col items-center">
+                    <div className="w-full py-4 border-b-2 bg-white text-black text-center text-3xl font-bold rounded-tl-md flex flex-col items-center">
                         <p>{props.title}</p>
                         <p className="mt-2 text-lg flex flex-row items-center"><FaDollarSign className="w-6 h-6" /><span className="ml-1 text-5xl font-extrabold">{props.price}</span><span className="ml-2 text-gray-500">/month</span></p>
                     </div>
@@ -42,12 +42,12 @@ const Pricing = (props) => {
                             })
                         }
                         <div className="w-full mt-11 flex flex-row justify-center">
-                            <button className="w-full mx-2 py-2 bg-white text-indigo-600 text-2xl rounded-lg shadow-md">Subscribe</button>
+                            <button className="w-full mx-2 py-2 bg-white text-indigo-600 text-2xl tracking-wide rounded-lg shadow-md">Subscribe</button>
                         </div>
                     </div>
                 </div> :
                 <div className="w-80 border-2 border-l-0 rounded-r-lg shadow-lg flex flex-col">
-                    <div className="w-full py-4 border-b-2 text-black text-center text-3xl font-bold flex flex-col items-center">
+                    <div className="w-full py-4 border-b-2 bg-white text-black text-center text-3xl font-bold rounded-tr-md flex flex-col items-center">
                         <p>{props.title}</p>
                         <p className="mt-2 text-lg flex flex-row items-center"><FaDollarSign className="w-6 h-6" /><span className="ml-1 text-5xl font-extrabold">{props.price}</span><span className="ml-2 text-gray-500">/month</span></p>
                     </div>
@@ -60,7 +60,7 @@ const Pricing = (props) => {
                             })
                         }
                         <div className="w-full mt-11 flex flex-row justify-center">
-                            <button className="w-full mx-2 py-2 bg-white text-indigo-600 text-2xl rounded-lg shadow-md">Subscribe</button>
+                            <button className="w-full mx-2 py-2 bg-white text-indigo-600 text-2xl tracking-wide rounded-lg shadow-md">Subscribe</button>
                         </div>
                     </div>
                 </div>

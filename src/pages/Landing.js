@@ -1,7 +1,61 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory} from 'react-router';
-import { IoReturnDownForward } from 'react-icons/io5';
 import Pricing from './Pricing';
+import Algos from './Algos';
+
+const algorithms = [
+    {
+        algorithm: "Regression",
+        catogries: [
+            {
+                name: "Logistic",
+                description: "It is the appropriate regression analysis to conduct when the dependent variable is dichotomous (binary).  Like all regression analyses, the logistic regression is a predictive analysis."
+            },
+            {
+                name: "Linear",
+                description: "It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables."
+            },
+            {
+                name: "Polynomial",
+                description: "It is a form of linear regression in which the relationship between the independent variable x and dependent variable y is modelded as an nth degree polynomial."
+            }
+        ]
+    },
+    {
+        algorithm: "Classification",
+        catogries: [
+            {
+                name: "Logistic",
+                description: "In feugiat massa lacus, eget tristique dolor lobortis eu. Morbi non nulla a libero laoreet luctus sit amet id lacus. Donec suscipit est vel nibh."
+            },
+            {
+                name: "K-Nearest Neighbour",
+                description: "It is an algorithm that stores all available cases and classifies new cases based on similar measure."
+            },
+            {
+                name: "Support Vector Machine",
+                description: "It is the classification algorithm consisting of many decision trees."
+            }
+        ]
+    },
+    {
+        algorithm: "Clustering",
+        catogries: [
+            {
+                name: "Hierarical",
+                description: "It is the binary classification model in which output variable is assumes to be equal to a linear combination of the input variables, transformed by the logistic function."
+            },
+            {
+                name: "Diverse Hiererical",
+                description: "It is also known as top-down approach. This algorithm does not require to pre-specify the number of clusters."
+            },
+            {
+                name: "Agglomerative",
+                description: "A structure that is more informative than the unstructured set of clusters returned by flat clustering. This clustering algorithm does not require us to pre-specify the number of clusters."
+            }
+        ]
+    }
+]
 
 const packages = [
     {
@@ -11,7 +65,8 @@ const packages = [
         isLeft: true,
         features: [
             "Feature 1",
-            "Feature 2"
+            "Feature 2",
+            "Feature 3"
         ]
     },
     {
@@ -33,12 +88,12 @@ const packages = [
         isPopular: false,
         isLeft: false,
         features: [
-            "Feature 1",
+            "something",
             "something",
             "something",
         ]
     }
-]
+];
 
 const Landing = () => {
     const history = useHistory();
@@ -59,34 +114,31 @@ const Landing = () => {
                     <p className="mt-4 text-gray-500 text-xl font-semibold">Our Machine Learning Algorithms ensure that your data is accurately trained</p>
                     <div className="w-5/12 mt-4 flex flex-row justify-center">
                         <button className="px-7 py-4 bg-indigo-600 text-white text-xl font-semibold rounded-md shadow-md hover:bg-indigo-700">Get Started</button>
-                        <button className="ml-5 px-7 py-4 bg-white text-indigo-600 text-xl font-semibold rounded-md shadow-md hover:bg-indigo-50">Live Demo</button>
+                        <button className="ml-5 px-7 py-4 bg-white text-indigo-600 text-xl font-semibold rounded-md shadow-md hover:bg-indigo-50">Demo</button>
                     </div>
                 </div>
-                <div className="h-5/6 w-56 bg-hero-pattern bg-contain bg-repeat absolute top-0 right-0" ></div>
-                <div className="h-4/6 w-56 bg-hero-pattern bg-contain bg-repeat absolute bottom-0 left-0" ></div>
+                <div className="h-5/6 w-56 bgPattern absolute top-0 right-0" ></div>
+                <div className="h-4/6 w-56 bgPattern absolute bottom-0 left-0" ></div>
             </div>
-            <div id="algorithms" className="w-screen h-screen bg-gray-50 bg-gradient-gray flex flex-col relative z-20">
-                <div className="w-full h-32">
-                    <h1 className="mt-3 px-7 py-4 text-gray-500 text-5xl text-center tracking-widest font-bold lg:text-2xl">ALGORITHMS</h1>
-                    <div className="w-32">
-                        <h2 className="text-xl">Method 1</h2>
-                        <span className="flex flex-row items-center justify-center"><IoReturnDownForward className="mx-4 w-10 h-10 inline"/><p>Sub 1</p></span>
-                        <span className="flex flex-row items-center justify-center"><IoReturnDownForward className="mx-4 w-10 h-10 inline"/><p>Sub 1</p></span>
-                        <span className="flex flex-row items-center justify-center"><IoReturnDownForward className="mx-4 w-10 h-10 inline"/><p>Sub 1</p></span>
-                    </div>
+            <div id="algorithms" className="py-3 w-screen min-h-screen bg-gray-50 bg-gradient-gray flex flex-col relative z-20">
+                <h1 className="px-7 py-4 text-gray-500 text-5xl text-center tracking-widest font-bold lg:text-2xl">ALGORITHMS</h1>
+                <div className="w-full flex flex-row space-x-8 items-start justify-center">
+                    {
+                        algorithms.map((item, index) => {
+                            return <Algos data-aos="fade-up" key={index} algorithm={item} />
+                        })
+                    }
                 </div>
             </div>
-            <div id="pricing" className="w-screen min-h-screen bg-white relative z-20">
-                <div className="w-full h-32">
-                    <h1 className="mt-3 px-7 py-4 text-gray-500 text-5xl text-center tracking-widest font-bold lg:text-2xl">PRICING</h1>
-                    <p className="text-indigo-600 text-5xl text-center font-bold">The right price for you, whoever you are</p>
-                    <div className="mt-12 px-24 w-full flex flex-row items-center justify-center 2xl:mt-40">
-                        {
-                            packages.map((items, index) => {
-                                return <Pricing key={index} title={items.title} price={items.price} isPopular={items.isPopular} isLeft={items.isLeft} features={items.features} />
-                            })
-                        }
-                    </div>
+            <div id="pricing" className="w-screen min-h-screen pb-4 relative z-30">
+                <h1 className="mt-3 px-7 py-4 text-gray-500 text-5xl text-center tracking-widest font-bold lg:text-2xl">PRICING</h1>
+                <p className="text-indigo-600 text-5xl text-center font-bold">The right price for you, whoever you are</p>
+                <div className="mt-12 px-24 w-full flex flex-row items-center justify-center 2xl:mt-40">
+                    {
+                        packages.map((item, index) => {
+                            return <Pricing key={index} title={item.title} price={item.price} isPopular={item.isPopular} isLeft={item.isLeft} features={item.features} />
+                        })
+                    }
                 </div>
             </div>
         </div>

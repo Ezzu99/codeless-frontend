@@ -113,7 +113,7 @@ const Landing = () => {
                     <h1 className="text-5xl font-bold lg:text-6xl">A codeless environment to help you <span className="text-indigo-600 text-center block">Train Your Data</span></h1>
                     <p className="mt-4 text-gray-500 text-xl font-semibold">Our Machine Learning Algorithms ensure that your data is accurately trained</p>
                     <div className="w-5/12 mt-4 flex flex-row justify-center">
-                        <button className="px-7 py-4 bg-indigo-600 text-white text-xl font-semibold rounded-md shadow-md hover:bg-indigo-700">Get Started</button>
+                        <button className="px-7 py-4 bg-gradient-to-br from-indigo-400 to-indigo-600 text-white text-xl font-semibold rounded-md shadow-md hover:bg-indigo-700">Get Started</button>
                         <button className="ml-5 px-7 py-4 bg-white text-indigo-600 text-xl font-semibold rounded-md shadow-md hover:bg-indigo-50">Demo</button>
                     </div>
                 </div>

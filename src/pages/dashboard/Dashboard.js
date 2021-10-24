@@ -2,27 +2,28 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { BsBoxArrowLeft, BsSearch, BsPersonCircle, BsPatchCheck, BsFiles } from 'react-icons/bs';
 import Files from './Files';
+import Activity from './Activity';
 
 const Dashboard = () => {
     const history = useHistory();
 
     return (
         <div className="w-screen h-screen flex flex-col">
-            <div id="nav" className="w-full px-8 py-2 bg-indigo-600 flex items-center justify-between relative z-10">
+            <div id="nav" className="w-screen px-7 py-2 bg-indigo-600 shadow-lg flex items-center justify-between relative z-30">
                 <h1 className="w-72 text-indigo-300  text-3xl font-bold pointer-events-none">Codeless</h1>
-                <div className="flex-grow px-4 py-1 bg-indigo-500 rounded-md flex flex-row items-center justify-start">
+                <div className="flex-grow px-4 py-1 bg-gradient-to-br from-indigo-400 to-indigo-500 rounded-md flex flex-row items-center justify-start">
                     <BsSearch className="w-4 h-4 mr-3 text-indigo-200" />
                     <input className="w-full text-indigo-200 bg-transparent placeholder-indigo-200 tracking-wide focus:outline-none" placeholder="Search files"></input>
                 </div>
                 <div className="w-72 flex justify-end">
-                    <button className="px-3 py-1 bg-indigo-400 rounded-md flex flex-row items-center justify-center hover:bg-red-400 transition-all" onClick={() => history.push('/login')}>
+                    <button className="px-3 py-1 bg-indigo-500 rounded-md flex flex-row items-center justify-center hover:bg-red-400 transition-all" onClick={() => history.push('/login')}>
                         <BsBoxArrowLeft className="w-5 h-5 mr-2 text-white" />
                         <span className="text-white tracking-wide">Logout</span>
                     </button>
                 </div>
             </div>
             <div id="dashboard" className="w-screen h-full flex flex-row overflow-hidden">
-                <div className="w-72 h-full border-r-2 flex flex-col relative z-10">
+                <div className="w-72 h-full border-r-2 bg-gradient-to-t from-transparent via-white to-white flex flex-col relative z-10">
                     <div className="h-24 px-7 flex flex-row items-center justify-start">
                         <BsPersonCircle className="w-12 h-12 bg-white rounded-full text-indigo-300" />
                         <div className="px-3 flex flex-col">
@@ -30,17 +31,19 @@ const Dashboard = () => {
                             <p className="text-gray-500 transform -translate-y-1">ezaan1999</p>
                         </div>
                     </div>
-                    <button className="mx-7 py-2 bg-indigo-600 rounded-md text-white tracking-wider">Train Data</button>
+                    <button className="mx-7 py-2 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md text-white tracking-wider hover:shadow-md transition-all">Train Data</button>
                     <div className="mt-6 px-7">
                         <span className="py-2 text-gray-500 flex flex-row items-center"><BsPatchCheck className="w-5 h-5 mr-2 bg-white" />Deluxe Member</span>
-                        <span className="py-2 text-gray-500 flex flex-row items-center"><BsFiles className="w-5 h-5 mr-2 bg-white" />10 Files</span>
+                        <span className="py-2 text-gray-500 flex flex-row items-center"><BsFiles className="w-5 h-5 mr-2 bg-white" />14 Files</span>
                     </div>
                 </div>
                 <div className="bg-white flex-grow relative z-10">
                     <Files />
                 </div>
-                <div className="w-72 h-full border-l-2 bg-gray-50"></div>
-                <div className="w-72 h-full bgPattern filter blur-sm absolute top-0 left-0 z-0"></div>
+                <div className="w-72 h-full border-l-2 flex flex-col">
+                    <Activity />
+                </div>
+                <div className="w-72 h-full bgPattern absolute top-0 left-0 z-0"></div>
             </div>
         </div>
     );

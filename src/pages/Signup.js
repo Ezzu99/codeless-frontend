@@ -112,6 +112,8 @@ const Signup = () => {
                             console.log(fname);
                             console.log(lname);
                             console.log(email);
+                            console.log(password);
+                            console.log(cpassword);
                         }}
                         >
                         Create Account

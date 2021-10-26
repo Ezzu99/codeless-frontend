@@ -5,7 +5,7 @@ const Pricing = (props) => {
     return (
         <div>
             {
-                (props.isPopular == true) ?
+                (props.isPopular === true) ?
                 <div className="w-96 border-2 border-indigo-600 rounded-lg shadow-lg flex flex-col items-center">
                     <div className="w-max px-3 text-white text-sm text-center font-semibold bg-indigo-600 rounded-full relative -top-3">
                         <p>MOST POPULAR</p>
@@ -27,7 +27,7 @@ const Pricing = (props) => {
                         </div>
                     </div>
                 </div> :
-                (props.isLeft == true) ?
+                (props.isLeft === true) ?
                 <div className="w-80 border-2 border-r-0 rounded-l-lg shadow-lg flex flex-col">
                     <div className="w-full py-4 border-b-2 bg-white text-black text-center text-3xl font-bold rounded-tl-md flex flex-col items-center">
                         <p>{props.title}</p>

@@ -7,7 +7,7 @@ const Pricing = (props) => {
             {
                 (props.isPopular === true) ?
                 <div className="w-96 border-2 border-indigo-600 rounded-lg shadow-lg flex flex-col items-center">
-                    <div className="w-max px-3 text-white text-sm text-center font-semibold bg-indigo-600 rounded-full relative -top-3">
+                    <div className="w-max px-3 text-white text-sm text-center font-semibold bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full relative -top-3">
                         <p>MOST POPULAR</p>
                     </div>
                     <div className="w-full py-4 border-b-2 bg-white text-black text-center text-3xl font-bold flex flex-col items-center">
@@ -23,7 +23,7 @@ const Pricing = (props) => {
                             })
                         }
                         <div className="w-full mt-11 flex flex-row justify-center">
-                            <button className="w-full mx-2 py-2 bg-indigo-600 text-white text-2xl tracking-wide rounded-lg">Subscribe</button>
+                            <button className="w-full mx-2 py-2 bg-gradient-to-br from-indigo-400 to-indigo-600 text-white text-2xl tracking-wide rounded-lg">Subscribe</button>
                         </div>
                     </div>
                 </div> :

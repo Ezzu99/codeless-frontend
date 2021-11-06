@@ -22,7 +22,7 @@ const activity = [
 
 const Activity = () => {
     return (
-        <div className="w-full h-full flex flex-col bg-gray-100">
+        <div className="w-full h-full flex flex-col">
             <div className="w-full flex-grow h-20 px-7 bg-gradient-to-b from-gray-100 via-gray-100 to-transparent flex flex-row items-center fixed z-20">
                 <h1 className="text-gray-600 text-xl font-bold">Activity Summary</h1>
             </div>

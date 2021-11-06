@@ -1,8 +1,8 @@
 import React from 'react';
 import Files from './Files';
 import Activity from './Activity';
-import NavBar from './NavBar';
-import SideBar from './SideBar';
+import NavBar from '../../components/NavBar';
+import SideBar from '../../components/SideBar';
 
 const files = [
     {
@@ -79,10 +79,10 @@ const Dashboard = () => {
             <NavBar />
             <div id="dashboard" className="w-screen h-full flex flex-row overflow-hidden">
                 <SideBar member="delux" length={files.length}/>
-                <div className="bg-white flex-grow relative z-10">
+                <div className="h-full bg-gray-100 flex-grow relative z-10">
                     <Files data={files}/>
                 </div>
-                <div className="w-72 h-full border-l-2 flex flex-col">
+                <div className="w-72 h-full bg-gray-100 flex flex-col">
                     <Activity />
                 </div>
             </div>

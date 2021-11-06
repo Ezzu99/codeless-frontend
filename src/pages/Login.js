@@ -82,8 +82,8 @@ const Login = () => {
                         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         onClick={() => {
                             if (email != null && password != null) {
-                                localStorage.setItem('userType', 'admin');
-                                (localStorage.getItem('userType') === 'admin') ? history.push('/admin-dashboard') : history.push('/dashboard')
+                                localStorage.setItem('userType', 'adminn');
+                                (localStorage.getItem('userType') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard')
                             }
                         }}
                         >

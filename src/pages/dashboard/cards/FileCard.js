@@ -2,7 +2,7 @@ import React from 'react';
 
 const FileCard = (props) => {
     return (
-        <div className="w-full px-7 py-1 border-b-2 flex flex-row justify-between">
+        <div className="flex-grow mx-3 my-1 px-4 py-2 bg-white rounded-md shadow-lg flex flex-row justify-between">
             <div>
                 <h1 className="text-gray-700 text-base tracking-wide">{props.file.name}</h1>
                 <p className="text-gray-400">Uploaded 3 hrs ago • {props.file.size} MB</p>

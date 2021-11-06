@@ -12,7 +12,7 @@ const Algos = (props) => {
             <tbody>
                 {
                     props.algorithm.catogries.map((item, index) => {
-                        return <tr>
+                        return <tr key={index}>
                             <th className="pr-3 border-r-2 border-gray-600 text-gray-400 text-lg align-top" align="right">{item.name}</th>
                             <td className="pl-2 text-gray-300" align="left">{item.description}</td>
                         </tr>

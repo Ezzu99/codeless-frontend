@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import AdminDashboard from './pages/dashboard/AdminDashboard';
+import AdminPanel from './pages/dashboard/AdminPanel';
 import Dashboard from './pages/dashboard/Dashboard';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/admin-dashboard" component={AdminDashboard} />
+        <Route path="/admin" component={AdminPanel} />
       </Switch>
     </Router>
   );

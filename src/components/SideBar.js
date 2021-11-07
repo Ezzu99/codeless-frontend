@@ -1,11 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsPersonCircle, BsPatchCheck, BsFiles, BsPeople } from 'react-icons/bs';
 
 const SideBar = (props) => {
     const [isOpen, setisOpen] = useState(false);
+    const [model, setmodel] = useState('1');
     const userType = localStorage.getItem('userType');
     const userOrFiles = (userType === 'admin') ? "Users" : "Files";
     const adminOrMember = (userType === 'admin') ? "Admin" : `${props.member} Member`;
+
+    const [modelType, setmodelType] = useState("Model");
+
+    const [title1, settitle1] = useState("Regression");
+    const [title2, settitle2] = useState("Classification");
+    const [title3, settitle3] = useState("Clustering");
+    const [para1, setpara1] = useState("Takes a group of random variables, thought to be predicting Y, and tries to find a mathematical relationship between them. This relationship is typically in the form of a straight line (linear regression) that best approximates all the individual data points");
+    const [para2, setpara2] = useState("Process of categorizing a given set of data into classes, It can be performed on both structured or unstructured data. The process starts with predicting the class of given data points. It approximates the mapping function from input variables to discrete output variables");
+    const [para3, setpara3] = useState("Involves automatically discovering natural grouping in data. Unlike supervised learning (like predictive modeling), clustering algorithms only interpret the input data and find natural groups or clusters in feature space");
+
+    useEffect(
+        () => {
+            if (model === 1) {
+                document.getElementById('1').classList.add('border-indigo-600');
+                document.getElementById('2').classList.remove('border-indigo-600');
+                document.getElementById('3').classList.remove('border-indigo-600');
+            }
+            else if (model === 2) {
+                document.getElementById('2').classList.add('border-indigo-600');
+                document.getElementById('1').classList.remove('border-indigo-600');
+                document.getElementById('3').classList.remove('border-indigo-600');
+            }
+            else if (model === 3) {
+                document.getElementById('3').classList.add('border-indigo-600');
+                document.getElementById('1').classList.remove('border-indigo-600');
+                document.getElementById('2').classList.remove('border-indigo-600');
+            }
+        }, [model]
+    )
 
     return (
         <>
@@ -27,13 +57,59 @@ const SideBar = (props) => {
             {
                 (isOpen) ?
                 <div className="w-screen h-screen bg-gray-700 bg-opacity-40 flex items-center justify-center absolute top-0 left-0 z-50">
-                    <div className="w-3/5 h-96 px-5 py-4 bg-white border-2 rounded-xl flex-flex-col">
-                        <div className="flex flex-row items-center justify-between">
-                            <h1 className="text-gray-600 text-xl font-bold">Choose Model</h1>
-                            <button className="px-2 py-1 bg-red-400 text-white rounded-md" onClick={() => setisOpen(false)}>Close</button>
+                    <div className="w-3/5 px-5 py-4 bg-white border-2 rounded-xl flex flex-col">
+                        <div className="flex flex-row items-center justify-start">
+                            <h1 className="text-gray-600 text-xl font-bold">Choose {modelType}</h1>
                         </div>
-                        <div>
-
+                        <div className="mt-4 flex flex-row items-stretch justify-between">
+                            <button id="1" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-lg flex flex-col items-start justify-start overflow-y-auto" onClick={() => setmodel(1)}>
+                                <h1 className="text-left text-gray-600 text-lg font-bold">{title1}</h1>
+                                <p className="text-gray-600 text-left">{para1}</p>
+                            </button>
+                            <button id="2" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-lg flex flex-col items-start justify-start" onClick={() => setmodel(2)}>
+                                <h1 className="text-left text-gray-600 text-lg font-bold">{title2}</h1>
+                                <p className="text-gray-600 text-left">{para2}</p>
+                            </button>
+                            <button id="3" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-lg flex flex-col items-start justify-start" onClick={() => setmodel(3)}>
+                                <h1 className="text-left text-gray-600 text-lg font-bold">{title3}</h1>
+                                <p className="text-gray-600 text-left">{para3}</p>
+                            </button>
+                        </div>
+                        <div className="h-full mt-3 flex flex-row items-center justify-end">
+                            <button className="ml-2 px-2 py-1 bg-gray-400 text-white rounded-md" onClick={() => setisOpen(false)}>Close</button>
+                            <button id="next" className="ml-2 px-2 py-1 bg-indigo-600 text-white rounded-md"
+                                onClick={
+                                    (model === 1) ? 
+                                    () => {
+                                        setmodelType("Type")
+                                        settitle1("Logistic");
+                                        settitle2("Linear");
+                                        settitle3("Polynomial");
+                                        setpara1("It is the appropriate regression analysis to conduct when the dependent variable is dichotomous (binary).  Like all regression analyses, the logistic regression is a predictive analysis");
+                                        setpara2("It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables");
+                                        setpara3("It is a form of linear regression in which the relationship between the independent variable x and dependent variable y is modelded as an nth degree polynomial");
+                                    } :
+                                    (model === 2) ?
+                                    () => {
+                                        setmodelType("Type")
+                                        settitle1("Logistic");
+                                        settitle2("K-Nearest Neighbour");
+                                        settitle3("Support Vector Machine");
+                                        setpara1("In feugiat massa lacus, eget tristique dolor lobortis eu. Morbi non nulla a libero laoreet luctus sit amet id lacus. Donec suscipit est vel nibh");
+                                        setpara2("It is an algorithm that stores all available cases and classifies new cases based on similar measure");
+                                        setpara3("It is the classification algorithm consisting of many decision trees");
+                                    } :
+                                    () => {
+                                        setmodelType("Type")
+                                        settitle1("Logistic");
+                                        settitle2("Linear");
+                                        settitle3("Polynomial");
+                                        setpara1("It is the appropriate regression analysis to conduct when the dependent variable is dichotomous (binary).  Like all regression analyses, the logistic regression is a predictive analysis");
+                                        setpara2("It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables");
+                                        setpara3("It is a form of linear regression in which the relationship between the independent variable x and dependent variable y is modelded as an nth degree polynomial");
+                                    }
+                                }
+                            >Next</button>
                         </div>
                     </div>
                 </div> :

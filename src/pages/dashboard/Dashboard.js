@@ -70,6 +70,12 @@ const files = [
         algo: "linear regression",
         accuracy: 83,
         size: 20
+    },
+    {
+        name: "Myfile 12",
+        algo: "linear regression",
+        accuracy: 73,
+        size: 10
     }
 ]
 

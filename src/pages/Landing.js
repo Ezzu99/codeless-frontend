@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory} from 'react-router';
+import { useHistory } from 'react-router';
 import Pricing from './Pricing';
 import Algos from './Algos';
 
@@ -26,7 +26,7 @@ const algorithms = [
         catogries: [
             {
                 name: "Logistic",
-                description: "In feugiat massa lacus, eget tristique dolor lobortis eu. Morbi non nulla a libero laoreet luctus sit amet id lacus. Donec suscipit est vel nibh."
+                description: "It is the binary classification model in which output variable is assumes to be equal to a linear combination of the input variables, transformed by the logistic function."
             },
             {
                 name: "K-Nearest Neighbour",
@@ -43,7 +43,7 @@ const algorithms = [
         catogries: [
             {
                 name: "Hierarical",
-                description: "It is the binary classification model in which output variable is assumes to be equal to a linear combination of the input variables, transformed by the logistic function."
+                description: "It is an algorithm that groups similar objects into groups called clusters. The endpoint is a set of clusters, where each cluster is distinct from other cluster, and the objects within each cluster are broadly similar to each other."
             },
             {
                 name: "Diverse Hiererical",
@@ -64,9 +64,9 @@ const packages = [
         isPopular: false,
         isLeft: true,
         features: [
-            "Feature 1",
-            "Feature 2",
-            "Feature 3"
+            "something",
+            "something",
+            "something"
         ]
     },
     {
@@ -113,19 +113,19 @@ const Landing = () => {
                     <h1 className="text-5xl font-bold lg:text-6xl">A codeless environment to help you <span className="text-indigo-600 text-center block">Train Your Data</span></h1>
                     <p className="mt-4 text-gray-500 text-xl font-semibold">Our Machine Learning Algorithms ensure that your data is accurately trained</p>
                     <div className="w-5/12 mt-4 flex flex-row justify-center">
-                        <button className="px-7 py-4 bg-gradient-to-br from-indigo-400 to-indigo-600 text-white text-xl font-semibold rounded-md shadow-md hover:bg-indigo-700">Get Started</button>
+                        <button className="px-7 py-4 bg-gradient-to-br from-indigo-400 to-indigo-600 text-white text-xl font-semibold rounded-md shadow-md hover:bg-indigo-700" onClick={() => history.push('/login')}>Get Started</button>
                         <button className="ml-5 px-7 py-4 bg-white text-indigo-600 text-xl font-semibold rounded-md shadow-md hover:bg-indigo-50">Demo</button>
                     </div>
                 </div>
                 <div className="h-5/6 w-56 bgPattern absolute top-0 right-0" ></div>
                 <div className="h-4/6 w-56 bgPattern absolute bottom-0 left-0" ></div>
             </div>
-            <div id="algorithms" className="py-3 w-screen min-h-screen bg-gray-50 bg-gradient-gray flex flex-col relative z-20">
+            <div id="algorithms" className="py-3 w-screen bg-gray-50 bg-gradient-gray flex flex-col relative z-20">
                 <h1 className="px-7 py-4 text-gray-500 text-5xl text-center tracking-widest font-bold lg:text-2xl">ALGORITHMS</h1>
                 <div className="w-full flex flex-row space-x-8 items-start justify-center">
                     {
                         algorithms.map((item, index) => {
-                            return <Algos data-aos="fade-up" key={index} algorithm={item} />
+                            return <Algos key={index} algorithm={item} />
                         })
                     }
                 </div>

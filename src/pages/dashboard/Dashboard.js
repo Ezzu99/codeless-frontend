@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Files from './Files';
 import Activity from './Activity';
 import NavBar from '../../components/NavBar';
@@ -80,6 +81,17 @@ const files = [
 ]
 
 const Dashboard = () => {
+    let history = useHistory();
+
+    useEffect(() => {
+        if (localStorage.getItem('loggedIn') === 'false') {
+            alert("Please Login first!");
+            history.push('/login');
+            
+            return;
+        }
+    }, []);
+
     return (
         <div className="w-screen h-screen flex flex-col">
             <NavBar />

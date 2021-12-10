@@ -1,11 +1,60 @@
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import axios from 'axios';
+
+let request = axios.create({
+    baseURL: 'something',
+    headers: {
+        post: {
+            'Content-Type': 'application/json'
+        }
+    }
+});
 
 const Login = () => {
     const [email, setemail] = useState();
     const [password, setpassword] = useState();
 
     const history = useHistory();
+
+    localStorage.setItem('loggedIn', 'true');
+    localStorage.setItem('package', 'member');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true;
+        submitButton.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-2');
+        submitButton.classList.add('bg-gray-400', 'pointer-events-none');
+
+        if (!email || !password) {
+            alert("Please enter your credentials!");
+            submitButton.disabled = false;
+            submitButton.classList.remove('bg-gray-400', 'pointer-events-none');
+            submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-2');
+            
+            return;
+        }
+        
+        try {
+            let res = await request.post('/something/something', {
+                email,
+                password,
+            });
+
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('package', 'admin');   //instead of 'admin' should be JSON.stringify(res.data.package)
+            (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
+        }
+        catch (e) {
+            alert('Incorrect email or password!');
+            (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
+            submitButton.disabled = false;
+            submitButton.classList.remove('bg-gray-400', 'pointer-events-none');
+            submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-2');
+        }
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -78,14 +127,10 @@ const Login = () => {
             
                     <div>
                         <button
+                        id="submitButton"
                         type="submit"
                         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        onClick={() => {
-                            if (email != null && password != null) {
-                                localStorage.setItem('userType', 'admin');
-                                (localStorage.getItem('userType') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard')
-                            }
-                        }}
+                        onClick={handleSubmit}
                         >
                         Login
                         </button>

@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
     const history = useHistory();
-    const userType = localStorage.getItem('userType');
+    const userType = localStorage.getItem('package');
     const placeholderText = (userType === 'admin') ? "Search Users" : "Search Files";
 
     return (

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom/";
 import { AreaChart, Area, BarChart, Bar } from 'recharts';
 import { XAxis } from "recharts/lib/cartesian/XAxis";
 import { YAxis } from "recharts";
@@ -53,6 +54,17 @@ const CustomTooltipBar = ({ active, payload, label }) => {
 };
 
 const AdminDashboard = (props) => {
+    let history = useHistory();
+
+    useEffect(() => {
+        if (localStorage.getItem('loggedIn') === 'false') {
+            alert("Please Login first!");
+            history.push('/login');
+            
+            return;
+        }
+    }, []);
+
     return (
         <div className="bg-gray-100 flex-grow relative z-10">
             <div className="w-full h-full flex flex-col">

@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { BsPersonCircle, BsPatchCheck, BsFiles, BsPeople } from 'react-icons/bs';
 
 const SideBar = (props) => {
+    let fileData = new FormData();
     const [isOpen, setisOpen] = useState(false);
+    const [button1, setbutton1] = useState('Next');
     const [model, setmodel] = useState('1');
     const [selectedModel, setselectedModel] = useState(0);
     const [selectedType, setselectedType] = useState(0);
+    const [selectedFile, setselectedFile] = useState(null);
     const userType = localStorage.getItem('userType');
-    const userOrFiles = (userType === 'admin') ? "Users" : "Files";
-    const adminOrMember = (userType === 'admin') ? "Admin" : `${props.member} Member`;
+    const userOrFiles = (localStorage.getItem('package') === 'admin') ? "Users" : "Files";
+    const adminOrMember = (localStorage.getItem('package') === 'admin') ? "Admin" : `${props.member} Member`;
 
-    const [modelType, setmodelType] = useState("Model");
+    const [diagTitle, setdiagTitle] = useState("Choose Model");
     const [count, setcount] = useState(0);
 
     const [title1, settitle1] = useState("Regression");
@@ -22,26 +26,44 @@ const SideBar = (props) => {
 
     useEffect(
         () => {
-            if (model === 1 && count !== 3) {
+            if (localStorage.getItem('package') === 'admin') {
+                document.getElementById('testData').classList.add('hidden');
+            }
+
+            if (model === 1 && count !== 2) {
                 document.getElementById('1').classList.add('border-indigo-600');
                 document.getElementById('2').classList.remove('border-indigo-600');
                 document.getElementById('3').classList.remove('border-indigo-600');
             }
-            else if (model === 2 && count !== 3) {
+            else if (model === 2 && count !== 2) {
                 document.getElementById('2').classList.add('border-indigo-600');
                 document.getElementById('1').classList.remove('border-indigo-600');
                 document.getElementById('3').classList.remove('border-indigo-600');
             }
-            else if (model === 3 && count !== 3) {
+            else if (model === 3 && count !== 2) {
                 document.getElementById('3').classList.add('border-indigo-600');
                 document.getElementById('1').classList.remove('border-indigo-600');
                 document.getElementById('2').classList.remove('border-indigo-600');
             }
-            else if (count === 3) {
+            else if (count === 2) {
                 document.getElementById('modelButtons').classList.add('hidden');
                 document.getElementById('modelFile').classList.remove('hidden');
             }
-        }, [model, count]
+            
+            if (count === 3) {
+                document.getElementById('modelFile').classList.add('hidden');
+                document.getElementById('spinner').classList.remove('hidden');
+            }
+
+            if (!selectedFile && count === 2) {
+                document.getElementById('next').classList.remove('bg-indigo-600');
+                document.getElementById('next').classList.add('bg-gray-400', 'pointer-events-none');
+            }
+            else if (selectedFile && count === 2) {
+                document.getElementById('next').classList.remove('bg-gray-400', 'pointer-events-none');
+                document.getElementById('next').classList.add('bg-indigo-600');
+            }
+        }, [model, count, selectedFile]
     )
 
     return (
@@ -54,8 +76,8 @@ const SideBar = (props) => {
                         <p className="text-gray-500 transform -translate-y-1">ezaan1999</p>
                     </div>
                 </div>
-                <button className="mx-7 py-2 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md text-white tracking-wider hover:shadow-lg transition-all" onClick={() => setisOpen(true)}>Test Data</button>
-                <div className="mt-6 px-7">
+                <button id="testData" className="mb-3 mx-7 py-2 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md text-white tracking-wider hover:shadow-lg transition-all" onClick={() => setisOpen(true)}>Test Data</button>
+                <div className="px-7">
                     <span className="py-2 text-gray-500 capitalize flex flex-row items-center"><BsPatchCheck className="w-5 h-5 mr-2 bg-white" />{adminOrMember}</span>
                     <span className="py-2 text-gray-500 capitalize flex flex-row items-center">{(userType === 'admin') ? <BsPeople className="w-5 h-5 mr-2 bg-white" /> : <BsFiles className="w-5 h-5 mr-2 bg-white" />}{props.length}{' '}{userOrFiles}</span>
                 </div>
@@ -66,7 +88,7 @@ const SideBar = (props) => {
                 <div className="w-screen h-screen bg-gray-700 bg-opacity-40 backdrop-filter backdrop-blur-sm flex items-center justify-center absolute top-0 left-0 z-50">
                     <div className="w-3/5 px-5 py-4 bg-white border-2 rounded-xl flex flex-col">
                         <div className="flex flex-row items-center justify-start">
-                            <h1 className="text-gray-600 text-xl font-bold">Choose {modelType}</h1>
+                            <h1 className="text-gray-600 text-xl font-bold">{diagTitle}</h1>
                         </div>
                         <div id="modelButtons" className="mt-4 flex flex-row items-stretch justify-between">
                             <button id="1" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-lg flex flex-col items-start justify-start overflow-y-auto" onClick={() => setmodel(1)}>
@@ -83,7 +105,14 @@ const SideBar = (props) => {
                             </button>
                         </div>
                         <div id="modelFile" className="hidden mt-4">
-                            <input type="file" multiple="false" accept=".csv" />
+                            <input type="file" multiple={false} accept=".csv" onChange={(event) => {
+                                setselectedFile(event.target.files[0]);
+                                fileData.append('file', event.target.files[0]);
+                                console.log(fileData);
+                            }} />
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <div id="spinner" className="w-28 h-28 mt-4 bg-no-repeat bg-center bg-contain spinnerSVG hidden animate-spin"></div>
                         </div>
                         <div className="h-full mt-3 flex flex-row items-center justify-end">
                             <button className="ml-2 px-2 py-1 bg-gray-400 text-white rounded-md"
@@ -91,7 +120,9 @@ const SideBar = (props) => {
                                     setisOpen(false);
                                     setmodel('1');
                                     setcount(0);
-                                    setmodelType("Model");
+                                    setbutton1('Next');
+                                    setselectedFile(null);
+                                    setdiagTitle("Choose Model");
                                     settitle1("Regression");
                                     settitle2("Classification");
                                     settitle3("Clustering");
@@ -106,7 +137,7 @@ const SideBar = (props) => {
                                     () => {
                                         setcount(1);
                                         setselectedModel(0);
-                                        setmodelType("Type");
+                                        setdiagTitle("Choose Type");
                                         settitle1("Logistic");
                                         settitle2("Linear");
                                         settitle3("Polynomial");
@@ -118,7 +149,7 @@ const SideBar = (props) => {
                                     () => {
                                         setcount(1);
                                         setselectedModel(1);
-                                        setmodelType("Type");
+                                        setdiagTitle("Choose Type");
                                         settitle1("Logistic");
                                         settitle2("K-Nearest Neighbour");
                                         settitle3("Support Vector Machine");
@@ -130,7 +161,7 @@ const SideBar = (props) => {
                                     () => {
                                         setcount(1);
                                         setselectedModel(2);
-                                        setmodelType("Type");
+                                        setdiagTitle("Choose Type");
                                         settitle1("Hierarical");
                                         settitle2("Diverse Hiererical");
                                         settitle3("Agglomerative");
@@ -140,24 +171,52 @@ const SideBar = (props) => {
                                     } :
                                     (model === 1 && count === 1) ?
                                     () => {
-                                        setcount(3);
+                                        setcount(2);
+                                        setbutton1('Train model');
                                         setselectedType(0);
-                                        setmodelType("File");
+                                        setdiagTitle("Upload File");
                                     } :
                                     (model === 2 && count === 1) ?
                                     () => {
-                                        setcount(3);
+                                        setcount(2);
+                                        setbutton1('Train model');
                                         setselectedType(1);
-                                        setmodelType("File");
+                                        setdiagTitle("Upload File");
                                     } :
                                     (model === 3 && count === 1) ?
                                     () => {
-                                        setcount(3);
+                                        setcount(2);
+                                        setbutton1('Train model');
                                         setselectedType(2);
-                                        setmodelType("File");
+                                        setdiagTitle("Upload File");
+                                    } :
+                                    (count === 2) ?
+                                    () => {
+                                        setcount(3);
+                                        setbutton1('Test data');
+                                        setdiagTitle("Training Model");
+                                        console.log(fileData);
+                                        console.log(selectedFile);
+                                        axios.post (
+                                            'https://v2.convertapi.commmmmmmm/upload',
+                                            { fileData },
+                                            {
+                                                headers: {
+                                                    'Accept': 'image/png',
+                                                    'content-type': 'image/png'
+                                                }
+                                            }
+                                        ).then(res => {
+                                            console.log(res)
+                                        }).catch(err => {
+                                            console.log(err)
+                                        })
+                                    } :
+                                    (count === 3) ?
+                                    () => {
                                     } : null
                                 }
-                            >Next</button>
+                            >{button1}</button>
                         </div>
                     </div>
                 </div> :

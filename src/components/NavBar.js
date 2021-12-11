@@ -1,7 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router";
 import { BsBoxArrowLeft, BsSearch } from 'react-icons/bs';
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 const NavBar = () => {
     const history = useHistory();

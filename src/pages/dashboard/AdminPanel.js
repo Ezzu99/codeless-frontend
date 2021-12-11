@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";

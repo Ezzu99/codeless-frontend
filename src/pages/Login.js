@@ -18,7 +18,7 @@ const Login = () => {
     const history = useHistory();
 
     localStorage.setItem('loggedIn', 'true');
-    localStorage.setItem('package', 'member');
+    localStorage.setItem('package', 'admin');
 
     const handleSubmit = async (e) => {
         e.preventDefault();

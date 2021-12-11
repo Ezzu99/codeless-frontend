@@ -16,8 +16,6 @@ const NavBar = () => {
                     <span className="w-full text-indigo-200 text-md tracking-widest flex flex-row items-center justify-evenly">
                         <NavLink to="/admin/dashboard" className="mx-1 hover:text-indigo-50" activeClassName="border-b-2 border-indigo-50">Dashboard</NavLink>
                         <NavLink to="/admin/users" className="mx-1 hover:text-indigo-50" activeClassName="border-b-2 border-indigo-50">Users</NavLink>
-                        <NavLink to="/admin/algorithms" className="mx-1 hover:text-indigo-50" activeClassName="border-b-2 border-indigo-50">Algorithms</NavLink>
-                        <NavLink to="/admin/pricing" className="mx-1 hover:text-indigo-50" activeClassName="border-b-2 border-indigo-50">Pricing</NavLink>
                     </span> :
                     <>
                         <BsSearch className="w-4 h-4 mr-3 text-indigo-200" />

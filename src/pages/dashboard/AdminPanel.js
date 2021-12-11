@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
+import Users from "./Users";
 
 const data = [
   {
@@ -77,6 +78,7 @@ const AdminPanel = () => {
                 <Redirect from="/admin" to="/admin/dashboard" />
                 <Switch>
                   <Route path="/admin/dashboard" component={() => <AdminDashboard data={data} />} />
+                  <Route path="/admin/users" component={() => <Users />} />
                 </Switch>
             </div>
         </div>

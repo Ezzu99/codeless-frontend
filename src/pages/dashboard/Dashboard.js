@@ -1,94 +1,92 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import Files from './Files';
 import Activity from './Activity';
 import NavBar from '../../components/NavBar';
 import SideBar from '../../components/SideBar';
 
-const files = [
-    {
-        name: "Myfile 1",
-        algo: "linear regression",
-        accuracy: 90,
-        size: 500
-    },
-    {
-        name: "Myfile 2",
-        algo: "linear regression",
-        accuracy: 75,
-        size: 95
-    },
-    {
-        name: "Myfile 3",
-        algo: "linear regression",
-        accuracy: 88,
-        size: 54
-    },
-    {
-        name: "Myfile 4",
-        algo: "linear regression",
-        accuracy: 89,
-        size: 123
-    },
-    {
-        name: "Myfile 5",
-        algo: "linear regression",
-        accuracy: 84,
-        size: 542
-    },
-    {
-        name: "Myfile 6",
-        algo: "linear regression",
-        accuracy: 70,
-        size: 9
-    },
-    {
-        name: "Myfile 7",
-        algo: "linear regression",
-        accuracy: 77,
-        size: 800
-    },
-    {
-        name: "Myfile 8",
-        algo: "linear regression",
-        accuracy: 86,
-        size: 40
-    },
-    {
-        name: "Myfile 9",
-        algo: "linear regression",
-        accuracy: 76,
-        size: 50
-    },
-    {
-        name: "Myfile 10",
-        algo: "linear regression",
-        accuracy: 81,
-        size: 300
-    },
-    {
-        name: "Myfile 11",
-        algo: "linear regression",
-        accuracy: 83,
-        size: 20
-    },
-    {
-        name: "Myfile 12",
-        algo: "linear regression",
-        accuracy: 73,
-        size: 10
+let request = axios.create({
+    baseURL: 'something',
+    headers: {
+        post: {
+            'Content-Type': 'application/json'
+        }
     }
-]
+});
 
 const Dashboard = () => {
+    const [user, setuser] = useState([
+        // {
+        //     userID: 0,
+        //     username: 'ezaan1999',
+        //     name: 'Ezaan Ali',
+        //     package: 'deluxe'
+        // }
+    ]);
+
+    const [files, setfiles] = useState([
+        // {
+        //     name: "Myfile 1",
+        //     algo: "linear regression",
+        //     accuracy: 90,
+        //     size: 58
+        // },
+        // {
+        //     name: "Myfile 2",
+        //     algo: "linear regression",
+        //     accuracy:67,
+        //     size: 34
+        // }
+    ]);
+
+    const [activity, setactivity] = useState([
+        // {
+        //     aName: "Models Used",
+        //     value: [
+        //         {name: 'Reg', value: 5},
+        //         {name: 'Clu', value: 1},
+        //         {name: 'Cla', value: 3}
+        //     ]
+        // },
+        // {
+        //     aName: "Most Used Model",
+        //     value: "Linear Regression"
+        // },
+        // {
+        //     aName: "Most Accurate Data",
+        //     value: "Myfile 1 with 90% accuracy"
+        // }
+    ]);
+    
     let history = useHistory();
 
-    useEffect(() => {
+    useEffect(async () => {
         if (localStorage.getItem('loggedIn') === 'false') {
             alert("Please Login first!");
             history.push('/login');
             
             return;
+        }
+        else if (localStorage.getItem('package') === 'admin') {
+            history.push('/admin/dashboard');
+
+            return;
+        }
+
+        try {
+            let res = await request.get('something', {
+                headers: {
+                    "Authorization": `${localStorage.getItem('token')}`
+                }
+            });
+
+            setuser(res.data.user);
+            setfiles(res.data.files);
+            setactivity(res.data.activity);
+        }
+        catch (e) {
+            alert("Please check your internet connection!");
         }
     }, []);
 
@@ -96,12 +94,14 @@ const Dashboard = () => {
         <div className="w-screen h-screen flex flex-col">
             <NavBar />
             <div id="dashboard" className="w-screen h-full flex flex-row overflow-hidden">
-                <SideBar member="delux" length={files.length}/>
+                <SideBar data={user} length={files.length}/>
                 <div className="h-full bg-gray-100 flex-grow relative z-10">
-                    <Files data={files}/>
+                    {
+                        <Files data={files}/>
+                    }
                 </div>
                 <div className="w-72 h-full bg-gray-100 flex flex-col">
-                    <Activity />
+                    <Activity data={activity}/>
                 </div>
             </div>
         </div>

@@ -165,7 +165,7 @@ const Signup = () => {
                                     value="free"
                                     autoComplete="off"
                                     required
-                                    className="appearance-none relative block border border-gray-300 text-indigo-500 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative block border border-gray-300 text-indigo-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
                                     onChange={() => setuserPackage("free")}
                                 />
@@ -179,7 +179,7 @@ const Signup = () => {
                                     value="deluxe"
                                     autoComplete="off"
                                     required
-                                    className="appearance-none relative block border border-gray-300 text-indigo-500 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative block border border-gray-300 text-indigo-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
                                     onChange={() => setuserPackage("deluxe")}
                                 />
@@ -193,7 +193,7 @@ const Signup = () => {
                                     value="premium"
                                     autoComplete="off"
                                     required
-                                    className="appearance-none relative block border border-gray-300 text-indigo-500 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="appearance-none relative block border border-gray-300 text-indigo-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
                                     onChange={() => setuserPackage("premium")}
                                 />

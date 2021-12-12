@@ -63,6 +63,10 @@ const AdminDashboard = (props) => {
             
             return;
         }
+        else if (localStorage.getItem('package') !== 'admin') {
+            alert("You are not allowed here!");
+            history.push('/dashboard');
+        }
     }, []);
 
     return (

@@ -18,7 +18,7 @@ const Login = () => {
     const history = useHistory();
 
     localStorage.setItem('loggedIn', 'true');
-    localStorage.setItem('package', 'admin');
+    localStorage.setItem('package', 'deluxe');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ const Login = () => {
                 email,
                 password,
             });
-
+            
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('package', 'admin');   //instead of 'admin' should be JSON.stringify(res.data.package)
             (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
@@ -66,9 +66,7 @@ const Login = () => {
                 <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">Login to your account</h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
                     Or{' '}
-                    <NavLink to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
-                    get yourself registered
-                    </NavLink>
+                    <NavLink to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">get yourself registered</NavLink>
                 </p>
                 </div>
                 <form className="mt-8 space-y-6">
@@ -111,7 +109,7 @@ const Login = () => {
                             id="remember-me"
                             name="remember-me"
                             type="checkbox"
-                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-md"
                         />
                         <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                             Remember me

@@ -10,9 +10,9 @@ const SideBar = (props) => {
     const [selectedModel, setselectedModel] = useState(0);
     const [selectedType, setselectedType] = useState(0);
     const [selectedFile, setselectedFile] = useState(null);
-    const userType = localStorage.getItem('userType');
+    const userType = localStorage.getItem('package');
     const userOrFiles = (localStorage.getItem('package') === 'admin') ? "Users" : "Files";
-    const adminOrMember = (localStorage.getItem('package') === 'admin') ? "Admin" : `${props.member} Member`;
+    const adminOrMember = (localStorage.getItem('package') === 'admin') ? "Admin" : `${props.data[0]?.package} Member`;
 
     const [diagTitle, setdiagTitle] = useState("Choose Model");
     const [count, setcount] = useState(0);
@@ -27,7 +27,7 @@ const SideBar = (props) => {
     useEffect(
         () => {
             if (localStorage.getItem('package') === 'admin') {
-                document.getElementById('testData').classList.add('hidden');
+                document.getElementById('testData')?.classList.add('hidden');
             }
 
             if (model === 1 && count !== 2) {
@@ -70,16 +70,42 @@ const SideBar = (props) => {
         <>
             <div className="w-72 h-full border-r-2 bg-gradient-to-t from-transparent via-white to-white flex flex-col relative z-10">
                 <div className="h-24 px-7 flex flex-row items-center justify-start">
-                    <BsPersonCircle className="w-12 h-12 bg-white rounded-full text-indigo-300" />
-                    <div className="px-3 flex flex-col">
-                        <p className="text-gray-600 font-bold">Ezaan Ali</p>
-                        <p className="text-gray-500 transform -translate-y-1">ezaan1999</p>
-                    </div>
+                    {
+                        (props.data[0]) ?
+                        <BsPersonCircle className="w-12 h-12 bg-white rounded-full text-indigo-300" /> :
+                        <BsPersonCircle className="w-12 h-12 bg-white rounded-full text-indigo-300 animate-pulse" />
+                    }
+                    {
+                        (props.data[0]) ?
+                        <div className="px-3 flex flex-col">
+                            <p className="text-gray-600 font-bold">{props.data[0].name}</p>
+                            <p className="text-gray-500 transform -translate-y-1">{props.data[0].username}</p>
+                        </div> :
+                        <div className="flex-grow pr-3">
+                            <div className="w-full h-10 mx-3 bg-gray-300 opacity-100 rounded-md animate-pulse"></div>
+                        </div>
+                    }
                 </div>
-                <button id="testData" className="mb-3 mx-7 py-2 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md text-white tracking-wider hover:shadow-lg transition-all" onClick={() => setisOpen(true)}>Test Data</button>
+                {
+                    (props.data[0]) ?
+                    <button id="testData" className="mb-3 mx-7 py-2 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md text-white tracking-wider hover:shadow-lg transition-all" onClick={() => setisOpen(true)}>Test Data</button> :
+                    <div id="testData" className="h-10 mb-3 mx-7 py-2 bg-gray-300 opacity-70 rounded-md animate-pulse"></div>
+                }
                 <div className="px-7">
-                    <span className="py-2 text-gray-500 capitalize flex flex-row items-center"><BsPatchCheck className="w-5 h-5 mr-2 bg-white" />{adminOrMember}</span>
-                    <span className="py-2 text-gray-500 capitalize flex flex-row items-center">{(userType === 'admin') ? <BsPeople className="w-5 h-5 mr-2 bg-white" /> : <BsFiles className="w-5 h-5 mr-2 bg-white" />}{props.length}{' '}{userOrFiles}</span>
+                    <span className="py-2 text-gray-500 capitalize flex flex-row items-center"><BsPatchCheck className="w-5 h-5 mr-2 bg-white" />
+                        {
+                            (props.data[0]) ?
+                            <p>{adminOrMember}</p> :
+                            <div className="w-52 h-6 bg-gray-300 opacity-50 rounded-md animate-pulse"></div>
+                        }
+                    </span>
+                    <span className="py-2 text-gray-500 capitalize flex flex-row items-center">{(userType === 'admin') ? <BsPeople className="w-5 h-5 mr-2 bg-white" /> : <BsFiles className="w-5 h-5 mr-2 bg-white" />}
+                        {
+                            (props.data[0]) ?
+                            <p>{props.length}{' '}{userOrFiles}</p> :
+                            <div className="w-52 h-6 bg-gray-300 opacity-30 rounded-md animate-pulse"></div>
+                        }
+                    </span>
                 </div>
             </div>
             <div className="w-72 h-full bgPattern absolute top-0 left-0 z-0"></div>

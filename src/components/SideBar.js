@@ -132,7 +132,21 @@ const SideBar = (props) => {
                         </div>
                         <div id="modelFile" className="hidden mt-4">
                             <input type="file" multiple={false} accept=".csv" onChange={(event) => {
-                                setselectedFile(event.target.files[0]);
+                                console.log(event.target.files[0].type);
+                                if (event.target.files[0].type === 'text/csv' || event.target.files[0].type === 'application/vnd.ms-excel' || event.target.files[0].type === 'text/comma-separated-values' || event.target.files[0].type === 'application/csv' || event.target.files[0].type === 'application/excel' || event.target.files[0].type === 'application/vnd.msexcel') {
+                                    setselectedFile(event.target.files[0]);
+                                }
+                                else {
+                                    setselectedFile(null);
+                                    alert("LOL, Please upload a .csv file!");
+                                    return;
+                                }
+                                if ((props.data[0]?.package === 'free' && event.target.files[0]?.size > 2000000) || (props.data[0]?.package === 'deluxe' && event.target.files[0]?.size > 4000000) || (props.data[0]?.package === 'premium' && event.target.files[0]?.size > 10000000)) {
+                                    setselectedFile(null);
+                                    alert(`File size limit exceeded! File size should be less than ${(props.data[0]?.package === 'free') ? "2MB" : (props.data[0]?.package === 'deluxe') ? "4MB" : "10MB"}!`);
+                                    return;
+                                }
+                                    
                                 fileData.append('file', event.target.files[0]);
                                 console.log(fileData);
                             }} />
@@ -224,12 +238,11 @@ const SideBar = (props) => {
                                         console.log(fileData);
                                         console.log(selectedFile);
                                         axios.post (
-                                            'https://v2.convertapi.commmmmmmm/upload',
+                                            'https://v2.convertapi.com/upload',
                                             { fileData },
                                             {
                                                 headers: {
-                                                    'Accept': 'image/png',
-                                                    'content-type': 'image/png'
+                                                    'content-type': 'application/vnd.ms-excel'
                                                 }
                                             }
                                         ).then(res => {

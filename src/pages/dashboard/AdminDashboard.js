@@ -54,21 +54,6 @@ const CustomTooltipBar = ({ active, payload, label }) => {
 };
 
 const AdminDashboard = (props) => {
-    let history = useHistory();
-
-    useEffect(() => {
-        if (localStorage.getItem('loggedIn') === 'false') {
-            alert("Please Login first!");
-            history.push('/login');
-            
-            return;
-        }
-        else if (localStorage.getItem('package') !== 'admin') {
-            alert("You are not allowed here!");
-            history.push('/dashboard');
-        }
-    }, []);
-
     return (
         <div className="bg-gray-100 flex-grow relative z-10">
             <div className="w-full h-full flex flex-col">

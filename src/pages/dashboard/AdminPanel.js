@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import axios from "axios";
 import AdminDashboard from "./AdminDashboard";
 import NavBar from "../../components/NavBar";
@@ -84,6 +84,21 @@ const AdminPanel = () => {
       package: 'admin'
     }
   ]);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem('loggedIn') === 'false') {
+        alert("Please Login first!");
+        history.push('/login');
+        
+        return;
+    }
+    else if (localStorage.getItem('package') !== 'admin') {
+        alert("Dude you are not allowed here!");
+        history.push('/dashboard');
+    }
+  }, []);
 
   let users = 0;
   data[0].usersJoined.map((items) => {

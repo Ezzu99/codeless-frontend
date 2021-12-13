@@ -20,6 +20,17 @@ const Login = () => {
     localStorage.setItem('loggedIn', 'true');
     localStorage.setItem('package', 'deluxe');
 
+    const validate = (event) => {
+        var pass = event;
+        var reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/;
+        var test = reg.test(pass);
+        if (test) {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -37,6 +48,15 @@ const Login = () => {
             return;
         }
         
+        if (!validate(password)) {
+            alert("Password must have 8-32 characters, atleast 1 number, atleast 1 lowercase and atleast 1 uppercase alphabat!");
+            submitButton.disabled = false;
+            submitButton.classList.remove('bg-gray-400', 'pointer-events-none');
+            submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-2');
+            
+            return;
+        }
+
         try {
             let res = await request.post('/something/something', {
                 email,

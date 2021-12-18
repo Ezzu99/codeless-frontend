@@ -79,6 +79,8 @@ const Login = () => {
                 }
             });
             console.log(res);
+            localStorage.setItem('username', `${res.data.username}`);
+            localStorage.setItem('email', `${res.data.email}`);
             if (res.data.premium) localStorage.setItem('package', 'premium');
             else if (res.data.deluxe) localStorage.setItem('package', 'deluxe');
             else if (res.data.free) localStorage.setItem('package', 'basic');

@@ -19,44 +19,44 @@ const Dashboard = () => {
     const [user, setuser] = useState([
         {
             userID: 0,
-            username: 'ezaan1999',
-            name: 'Ezaan Ali',
+            username: localStorage.getItem('email'),
+            name: localStorage.getItem('username'),
             package: 'premium'
         }
     ]);
 
     const [files, setfiles] = useState([
-        {
-            name: "Myfile 1",
-            algo: "linear regression",
-            accuracy: 90,
-            size: 3
-        },
-        {
-            name: "Myfile 2",
-            algo: "linear regression",
-            accuracy:67,
-            size: 1.3
-        }
+        // {
+        //     name: "Myfile 1",
+        //     algo: "linear regression",
+        //     accuracy: 90,
+        //     size: 3
+        // },
+        // {
+        //     name: "Myfile 2",
+        //     algo: "linear regression",
+        //     accuracy:67,
+        //     size: 1.3
+        // }
     ]);
 
     const [activity, setactivity] = useState([
-        {
-            aName: "Models Used",
-            value: [
-                {name: 'Reg', value: 5},
-                {name: 'Clu', value: 1},
-                {name: 'Cla', value: 3}
-            ]
-        },
-        {
-            aName: "Most Used Model",
-            value: "Linear Regression"
-        },
-        {
-            aName: "Most Accurate Data",
-            value: "Myfile 1 with 90% accuracy"
-        }
+        // {
+        //     aName: "Models Used",
+        //     value: [
+        //         {name: 'Reg', value: 5},
+        //         {name: 'Clu', value: 1},
+        //         {name: 'Cla', value: 3}
+        //     ]
+        // },
+        // {
+        //     aName: "Most Used Model",
+        //     value: "Linear Regression"
+        // },
+        // {
+        //     aName: "Most Accurate Data",
+        //     value: "Myfile 1 with 90% accuracy"
+        // }
     ]);
     
     let history = useHistory();

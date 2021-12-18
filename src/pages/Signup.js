@@ -12,8 +12,7 @@ let request = axios.create({
 });
 
 const Signup = () => {
-    const [fname, setfname] = useState();
-    const [lname, setlname] = useState();
+    const [username, setusername] = useState();
     const [email, setemail] = useState();
     const [password, setpassword] = useState();
     const [cpassword, setcpassword] = useState();
@@ -60,7 +59,7 @@ const Signup = () => {
 
         try {
             let res = await request.post('/auth/register/', {
-                "username": fname,
+                "username": username,
                 "email": email,
                 "password":password,
                 "choice": userPackage
@@ -92,32 +91,17 @@ const Signup = () => {
                         <div className="flex flex-row flex-grow items-center justify-between">
                             <div className="w-full mr-1">
                                 <label htmlFor="First Name" className="sr-only">
-                                    First Name
+                                    Username
                                 </label>
                                 <input
-                                    id="fname"
-                                    name="fname"
+                                    id="username"
+                                    name="username"
                                     type="name"
                                     autoComplete="off"
                                     required
                                     className="appearance-none w-full relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="First name"
-                                    onChange={(e) => setfname(e.target.value)}
-                                />
-                            </div>
-                            <div className="w-full ml-1">
-                                <label htmlFor="Last Name" className="sr-only">
-                                    Last Name
-                                </label>
-                                <input
-                                    id="lname"
-                                    name="lname"
-                                    type="name"
-                                    autoComplete="off"
-                                    required
-                                    className="appearance-none w-full relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                    placeholder="Last name"
-                                    onChange={(e) => setlname(e.target.value)}
+                                    placeholder="Username"
+                                    onChange={(e) => setusername(e.target.value)}
                                 />
                             </div>
                         </div>

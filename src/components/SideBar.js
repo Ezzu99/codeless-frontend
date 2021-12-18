@@ -6,6 +6,7 @@ const SideBar = (props) => {
     let fileData = new FormData();
     const [isOpen, setisOpen] = useState(false);
     const [button1, setbutton1] = useState('Next');
+    const [button2, setbutton2] = useState('Cancel');
     const [model, setmodel] = useState('1');
     const [selectedModel, setselectedModel] = useState(1);
     const [selectedType, setselectedType] = useState(1);
@@ -50,16 +51,27 @@ const SideBar = (props) => {
                 document.getElementById('modelFile').classList.remove('hidden');
             }
             
-            if (count === 3) {
+            if (count === 3 || count === 5) {
                 document.getElementById('modelFile').classList.add('hidden');
                 document.getElementById('spinner').classList.remove('hidden');
+                document.getElementById('next').classList.add('hidden');
             }
 
-            if (!selectedFile && count === 2) {
+            if (count === 4) {
+                document.getElementById('modelFile').classList.remove('hidden');
+                document.getElementById('spinner').classList.add('hidden');
+                document.getElementById('next').classList.remove('hidden');
+            }
+
+            if (count === 6) {
+                document.getElementById('spinner').classList.add('hidden');
+            }
+
+            if (!selectedFile && (count === 2 || count === 4)) {
                 document.getElementById('next').classList.remove('bg-indigo-600');
                 document.getElementById('next').classList.add('bg-gray-400', 'pointer-events-none');
             }
-            else if (selectedFile && count === 2) {
+            else if (selectedFile && (count === 2 || count === 4)) {
                 document.getElementById('next').classList.remove('bg-gray-400', 'pointer-events-none');
                 document.getElementById('next').classList.add('bg-indigo-600');
             }
@@ -68,7 +80,7 @@ const SideBar = (props) => {
 
     return (
         <>
-            <div className="w-72 h-full border-r-2 bg-gradient-to-t from-transparent via-white to-white flex flex-col relative z-10">
+            <div className="w-80 h-full border-r-2 bg-gradient-to-t from-transparent via-white to-white flex flex-col relative z-10">
                 <div className="h-24 px-7 flex flex-row items-center justify-start">
                     {
                         (props.data[0]) ?
@@ -108,7 +120,7 @@ const SideBar = (props) => {
                     </span>
                 </div>
             </div>
-            <div className="w-72 h-full bgPattern absolute top-0 left-0 z-0"></div>
+            <div className="w-80 mx-2 h-full bgPattern absolute top-0 left-0 z-0"></div>
             {
                 (isOpen) ?
                 <div className="w-screen h-screen bg-gray-700 bg-opacity-40 backdrop-filter backdrop-blur-sm flex items-center justify-center absolute top-0 left-0 z-50">
@@ -131,8 +143,8 @@ const SideBar = (props) => {
                             </button>
                         </div>
                         <div id="modelFile" className="hidden mt-4">
-                            <input type="file" multiple={false} accept=".csv"  onChange={(event) => {
-                                if (event.target.files[0].type === 'text/csv' || event.target.files[0].type === 'application/vnd.ms-excel' || event.target.files[0].type === 'text/comma-separated-values' || event.target.files[0].type === 'application/csv' || event.target.files[0].type === 'application/excel' || event.target.files[0].type === 'application/vnd.msexcel') {
+                            <input type="file" multiple={false} accept=".csv" onChange={(event) => {
+                                if (event.target.files[0] && (event.target.files[0].type === 'text/csv' || event.target.files[0].type === 'application/vnd.ms-excel' || event.target.files[0].type === 'text/comma-separated-values' || event.target.files[0].type === 'application/csv' || event.target.files[0].type === 'application/excel' || event.target.files[0].type === 'application/vnd.msexcel')) {
                                     setselectedFile(event.target.files[0]);
                                 }
                                 else {
@@ -157,6 +169,7 @@ const SideBar = (props) => {
                                     setmodel('1');
                                     setcount(0);
                                     setbutton1('Next');
+                                    setbutton2('Cancel');
                                     setselectedFile(null);
                                     setdiagTitle("Choose Model");
                                     settitle1("Regression");
@@ -166,7 +179,7 @@ const SideBar = (props) => {
                                     setpara2("Process of categorizing a given setpara of data into classes, It can be performed on both structured or unstructured data. The process starts with predicting the class of given data points. It approximates the mapping function from input variables to discrete output variables");
                                     setpara3("Involves automatically discovering natural grouping in data. Unlike supervised learning (like predictive modeling), clustering algorithms only interpret the input data and find natural groups or clusters in feature space");
                                 }}
-                            >Cancel</button>
+                            >{button2}</button>
                             <button id="next" className="ml-2 px-2 py-1 bg-indigo-600 text-white rounded-md"
                                 onClick={
                                     (model === 1 && count === 0) ? 
@@ -261,12 +274,22 @@ const SideBar = (props) => {
                                                 }
                                             }
                                         ).then(res => {
-                                            console.log(res)
+                                            console.log(res);
+                                            setcount(4);
+                                            setdiagTitle("Upload Test File");
                                         }).catch(err => {
-                                            console.log(err)
+                                            console.log(err);
+                                            alert("Unable to train model");
                                         })
+                                    } :
+                                    (count === 4) ?
+                                    () => {
+                                        setcount(5);
+                                        setdiagTitle("Testing File");
+                                        fileData.append('file', selectedFile);
+                                        fileData.append('secondpass', 'true');
                                         axios.post (
-                                            'http://127.0.0.1:5000/',
+                                            'http://127.0.0.1:8000/auth/upload/',
                                             fileData,
                                             {
                                                 headers: {
@@ -275,13 +298,15 @@ const SideBar = (props) => {
                                                 }
                                             }
                                         ).then(res => {
-                                            console.log(res)
+                                            console.log(res);
+                                            setbutton2('Exit'); // move these lines to .then
+                                            setcount(6);
+                                            setdiagTitle("File Successfully Tested");
                                         }).catch(err => {
-                                            console.log(err)
+                                            console.log(err);
+                                            setbutton2('Exit');
+                                            alert('Unable to test file!');
                                         })
-                                    } :
-                                    (count === 3) ?
-                                    () => {
                                     } : null
                                 }
                             >{button1}</button>

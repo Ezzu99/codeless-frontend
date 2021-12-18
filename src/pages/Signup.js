@@ -3,7 +3,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 let request = axios.create({
-    baseURL: 'something',
+    baseURL: 'http://127.0.0.1:8000/',
     headers: {
         post: {
             'Content-Type': 'application/json'
@@ -59,14 +59,13 @@ const Signup = () => {
         }
 
         try {
-            let res = await request.post('/something/something', {
-                fname,
-                lname,
-                email,
-                password,
-                userPackage
+            let res = await request.post('/auth/register/', {
+                "username": fname,
+                "email": email,
+                "password":password,
+                "choice": userPackage
             })
-            
+            console.log(res);
             alert(`We have sent a verification email to ${email}`);
             history.push('/login');
         }
@@ -182,12 +181,12 @@ const Signup = () => {
                                     id="package1"
                                     name="package"
                                     type="radio"
-                                    value="free"
+                                    value={1}
                                     autoComplete="off"
                                     required
                                     className="appearance-none relative block border border-gray-300 text-indigo-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
-                                    onChange={() => setuserPackage("free")}
+                                    onChange={() => setuserPackage("1")}
                                 />
                                 <label htmlFor="package" className="ml-2 mr-5 text-gray-500">
                                     Free
@@ -196,12 +195,12 @@ const Signup = () => {
                                     id="package2"
                                     name="package"
                                     type="radio"
-                                    value="deluxe"
+                                    value={2}
                                     autoComplete="off"
                                     required
                                     className="appearance-none relative block border border-gray-300 text-indigo-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
-                                    onChange={() => setuserPackage("deluxe")}
+                                    onChange={() => setuserPackage("2")}
                                 />
                                 <label htmlFor="package" className="ml-2 mr-5 text-gray-500">
                                     Deluxe
@@ -210,12 +209,12 @@ const Signup = () => {
                                     id="package3"
                                     name="package"
                                     type="radio"
-                                    value="premium"
+                                    value={3}
                                     autoComplete="off"
                                     required
                                     className="appearance-none relative block border border-gray-300 text-indigo-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-600 focus:border-indigo-600 focus:z-10 sm:text-sm"
                                     placeholder="Email address"
-                                    onChange={() => setuserPackage("premium")}
+                                    onChange={() => setuserPackage("3")}
                                 />
                                 <label htmlFor="package" className="ml-2 mr-5 text-gray-500">
                                     Premium

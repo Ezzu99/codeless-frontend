@@ -3,7 +3,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 let request = axios.create({
-    baseURL: 'something',
+    baseURL: 'http://127.0.0.1:8000',
     headers: {
         post: {
             'Content-Type': 'application/json'
@@ -16,9 +16,6 @@ const Login = () => {
     const [password, setpassword] = useState();
 
     const history = useHistory();
-
-    localStorage.setItem('loggedIn', 'true');
-    localStorage.setItem('package', 'deluxe');
 
     const validate = (event) => {
         var pass = event;
@@ -58,21 +55,38 @@ const Login = () => {
         }
 
         try {
-            let res = await request.post('/something/something', {
+            let res = await request.post('/api/token/', {
                 email,
                 password,
             });
-            
+            console.log(res);
             localStorage.setItem('loggedIn', 'true');
-            localStorage.setItem('package', 'admin');   //instead of 'admin' should be JSON.stringify(res.data.package)
-            (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
+            // localStorage.setItem('package', 'member');   //instead of 'admin' should be JSON.stringify(res.data.package)
+            localStorage.setItem('token', res.data.access);
         }
         catch (e) {
             alert('Incorrect email or password!');
-            (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
+            // (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
             submitButton.disabled = false;
             submitButton.classList.remove('bg-gray-400', 'pointer-events-none');
             submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-2');
+        }
+
+        try {
+            let res = await request.get('/auth/package/', {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            console.log(res);
+            if (res.data.premium) localStorage.setItem('package', 'premium');
+            else if (res.data.deluxe) localStorage.setItem('package', 'deluxe');
+            else if (res.data.free) localStorage.setItem('package', 'basic');
+            else localStorage.setItem('package', 'admin');
+            (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
+        }
+        catch (e) {
+            console.log(e);
         }
     }
 

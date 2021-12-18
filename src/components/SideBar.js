@@ -7,8 +7,8 @@ const SideBar = (props) => {
     const [isOpen, setisOpen] = useState(false);
     const [button1, setbutton1] = useState('Next');
     const [model, setmodel] = useState('1');
-    const [selectedModel, setselectedModel] = useState(0);
-    const [selectedType, setselectedType] = useState(0);
+    const [selectedModel, setselectedModel] = useState(1);
+    const [selectedType, setselectedType] = useState(1);
     const [selectedFile, setselectedFile] = useState(null);
     const userType = localStorage.getItem('package');
     const userOrFiles = (localStorage.getItem('package') === 'admin') ? "Users" : "Files";
@@ -131,8 +131,7 @@ const SideBar = (props) => {
                             </button>
                         </div>
                         <div id="modelFile" className="hidden mt-4">
-                            <input type="file" multiple={false} accept=".csv" onChange={(event) => {
-                                console.log(event.target.files[0].type);
+                            <input type="file" multiple={false} accept=".csv"  onChange={(event) => {
                                 if (event.target.files[0].type === 'text/csv' || event.target.files[0].type === 'application/vnd.ms-excel' || event.target.files[0].type === 'text/comma-separated-values' || event.target.files[0].type === 'application/csv' || event.target.files[0].type === 'application/excel' || event.target.files[0].type === 'application/vnd.msexcel') {
                                     setselectedFile(event.target.files[0]);
                                 }
@@ -146,9 +145,6 @@ const SideBar = (props) => {
                                     alert(`File size limit exceeded! File size should be less than ${(props.data[0]?.package === 'free') ? "2MB" : (props.data[0]?.package === 'deluxe') ? "4MB" : "10MB"}!`);
                                     return;
                                 }
-                                    
-                                fileData.append('file', event.target.files[0]);
-                                console.log(fileData);
                             }} />
                         </div>
                         <div className="flex items-center justify-center">
@@ -176,7 +172,7 @@ const SideBar = (props) => {
                                     (model === 1 && count === 0) ? 
                                     () => {
                                         setcount(1);
-                                        setselectedModel(0);
+                                        setselectedModel(1);
                                         setdiagTitle("Choose Type");
                                         settitle1("Logistic");
                                         settitle2("Linear");
@@ -188,7 +184,7 @@ const SideBar = (props) => {
                                     (model === 2 && count === 0) ?
                                     () => {
                                         setcount(1);
-                                        setselectedModel(1);
+                                        setselectedModel(2);
                                         setdiagTitle("Choose Type");
                                         settitle1("Logistic");
                                         settitle2("K-Nearest Neighbour");
@@ -200,7 +196,7 @@ const SideBar = (props) => {
                                     (model === 3 && count === 0) ?
                                     () => {
                                         setcount(1);
-                                        setselectedModel(2);
+                                        setselectedModel(3);
                                         setdiagTitle("Choose Type");
                                         settitle1("Hierarical");
                                         settitle2("Diverse Hiererical");
@@ -213,21 +209,21 @@ const SideBar = (props) => {
                                     () => {
                                         setcount(2);
                                         setbutton1('Train model');
-                                        setselectedType(0);
+                                        setselectedType(1);
                                         setdiagTitle("Upload File");
                                     } :
                                     (model === 2 && count === 1) ?
                                     () => {
                                         setcount(2);
                                         setbutton1('Train model');
-                                        setselectedType(1);
+                                        setselectedType(2);
                                         setdiagTitle("Upload File");
                                     } :
                                     (model === 3 && count === 1) ?
                                     () => {
                                         setcount(2);
                                         setbutton1('Train model');
-                                        setselectedType(2);
+                                        setselectedType(3);
                                         setdiagTitle("Upload File");
                                     } :
                                     (count === 2) ?
@@ -235,14 +231,47 @@ const SideBar = (props) => {
                                         setcount(3);
                                         setbutton1('Test data');
                                         setdiagTitle("Training Model");
+                                        fileData.append('file', selectedFile);
+                                        fileData.append('choice', selectedModel);
+                                        fileData.append('fname', selectedFile.name)
+                                        if (selectedModel === 1) {
+                                            if (selectedType === 1) fileData.append('type', 'Regression-Linear');
+                                            else if (selectedType === 2) fileData.append('type', 'Regression-Multiple');
+                                            else fileData.append('type', 'Regression-SVM');
+                                        }
+                                        else if (selectedModel === 2) {
+                                            if (selectedType === 1) fileData.append('type', 'Classification-KNN');
+                                            else if (selectedType === 2) fileData.append('type', 'Classification-Naive_Bayes');
+                                            else fileData.append('type', 'Classification-DTC');
+                                        }
+                                        else {
+                                            if (selectedType === 1) fileData.append('type', 'Clustering-Density_Based');
+                                            else if (selectedType === 2) fileData.append('type', 'Clustering-Eclat');
+                                            else fileData.append('type', 'Clustering-K_Mean');
+                                        }
                                         console.log(fileData);
                                         console.log(selectedFile);
                                         axios.post (
-                                            'https://v2.convertapi.com/upload',
-                                            { fileData },
+                                            'http://127.0.0.1:8000/auth/upload/',
+                                            fileData,
                                             {
                                                 headers: {
-                                                    'content-type': 'application/vnd.ms-excel'
+                                                    "Content-Type": 'multipart/form-data',
+                                                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                                                }
+                                            }
+                                        ).then(res => {
+                                            console.log(res)
+                                        }).catch(err => {
+                                            console.log(err)
+                                        })
+                                        axios.post (
+                                            'http://127.0.0.1:5000/',
+                                            fileData,
+                                            {
+                                                headers: {
+                                                    "Content-Type": 'multipart/form-data',
+                                                    "Authorization": `Bearer ${localStorage.getItem('token')}`
                                                 }
                                             }
                                         ).then(res => {

@@ -7,7 +7,7 @@ import NavBar from '../../components/NavBar';
 import SideBar from '../../components/SideBar';
 
 let request = axios.create({
-    baseURL: 'something',
+    baseURL: 'http://127.0.0.1:8000/',
     headers: {
         post: {
             'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ const Dashboard = () => {
             setactivity(res.data.activity);
         }
         catch (e) {
-            alert("Please check your internet connection!");
+            // alert("Please check your internet connection!");
         }
     }, []);
 

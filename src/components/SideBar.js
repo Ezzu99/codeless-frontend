@@ -187,9 +187,9 @@ const SideBar = (props) => {
                                         setcount(1);
                                         setselectedModel(1);
                                         setdiagTitle("Choose Type");
-                                        settitle1("Logistic");
-                                        settitle2("Linear");
-                                        settitle3("Polynomial");
+                                        settitle1("Linear");
+                                        settitle2("Multiple");
+                                        settitle3("Support Vector Machine");
                                         setpara1("It is the appropriate regression analysis to conduct when the dependent variable is dichotomous (binary).  Like all regression analyses, the logistic regression is a predictive analysis");
                                         setpara2("It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables");
                                         setpara3("It is a form of linear regression in which the relationship between the independent variable x and dependent variable y is modelded as an nth degree polynomial");
@@ -199,9 +199,9 @@ const SideBar = (props) => {
                                         setcount(1);
                                         setselectedModel(2);
                                         setdiagTitle("Choose Type");
-                                        settitle1("Logistic");
-                                        settitle2("K-Nearest Neighbour");
-                                        settitle3("Support Vector Machine");
+                                        settitle1("K-Nearest Neighbour");
+                                        settitle2("Naive Bayes");
+                                        settitle3("DTC");
                                         setpara1("In feugiat massa lacus, eget tristique dolor lobortis eu. Morbi non nulla a libero laoreet luctus sit amet id lacus. Donec suscipit est vel nibh");
                                         setpara2("It is an algorithm that stores all available cases and classifies new cases based on similar measure");
                                         setpara3("It is the classification algorithm consisting of many decision trees");
@@ -211,9 +211,9 @@ const SideBar = (props) => {
                                         setcount(1);
                                         setselectedModel(3);
                                         setdiagTitle("Choose Type");
-                                        settitle1("Hierarical");
-                                        settitle2("Diverse Hiererical");
-                                        settitle3("Agglomerative");
+                                        settitle1("Density Based");
+                                        settitle2("Eclat");
+                                        settitle3("K-Mean");
                                         setpara1("It is the binary classification model in which output variable is assumes to be equal to a linear combination of the input variables, transformed by the logistic function");
                                         setpara2("It is also known as top-down approach. This algorithm does not require to pre-specify the number of clusters");
                                         setpara3("A structure that is more informative than the unstructured set of clusters returned by flat clustering. This clustering algorithm does not require us to pre-specify the number of clusters");

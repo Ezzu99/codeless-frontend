@@ -8,16 +8,16 @@ const algorithms = [
         algorithm: "Regression",
         catogries: [
             {
-                name: "Logistic",
-                description: "It is the appropriate regression analysis to conduct when the dependent variable is dichotomous (binary).  Like all regression analyses, the logistic regression is a predictive analysis."
-            },
-            {
                 name: "Linear",
-                description: "It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables."
+                description: "It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables"
             },
             {
-                name: "Polynomial",
-                description: "It is a form of linear regression in which the relationship between the independent variable x and dependent variable y is modelded as an nth degree polynomial."
+                name: "Multiple",
+                description: "It is an extension of simple linear regression. It is used when we want to predict the value of a variable based on the value of two or more other variables"
+            },
+            {
+                name: "Support Vector Machine",
+                description: "It constructs a hyperplane or set of hyperplanes in a high- or infinite-dimensional space, which can be used for classification, regression, or other tasks like outliers detection"
             }
         ]
     },
@@ -25,16 +25,16 @@ const algorithms = [
         algorithm: "Classification",
         catogries: [
             {
-                name: "Logistic",
-                description: "It is the binary classification model in which output variable is assumes to be equal to a linear combination of the input variables, transformed by the logistic function."
-            },
-            {
                 name: "K-Nearest Neighbour",
-                description: "It is an algorithm that stores all available cases and classifies new cases based on similar measure."
+                description: "It is an algorithm that stores all available cases and classifies new cases based on similar measure"
             },
             {
-                name: "Support Vector Machine",
-                description: "It is the classification algorithm consisting of many decision trees."
+                name: "Naive Bayes",
+                description: "It is a simple technique for constructing classifiers: models that assign class labels to problem instances, represented as vectors of feature values, where the class labels are drawn from some finite set"
+            },
+            {
+                name: "Decision Tree Classifier",
+                description: "It uses a decision tree (as a predictive model) to go from observations about an item (represented in the branches) to conclusions about the item's target value (represented in the leaves)"
             }
         ]
     },
@@ -42,16 +42,16 @@ const algorithms = [
         algorithm: "Clustering",
         catogries: [
             {
-                name: "Hierarical",
-                description: "It is an algorithm that groups similar objects into groups called clusters. The endpoint is a set of clusters, where each cluster is distinct from other cluster, and the objects within each cluster are broadly similar to each other."
+                name: "Density Based",
+                description: "It is a density-based clustering non-parametric algorithm: given a set of points in some space, it groups together points that are closely packed together (points with many nearby neighbors), marking as outliers points that lie alone in low-density regions (whose nearest neighbors are too far away)"
             },
             {
-                name: "Diverse Hiererical",
-                description: "It is also known as top-down approach. This algorithm does not require to pre-specify the number of clusters."
+                name: "Eclat",
+                description: "It is an algorithm for finding frequent item sets in a transaction or database. Eclat algorithm uses a Depth first search for discovering frequent item sets"
             },
             {
-                name: "Agglomerative",
-                description: "A structure that is more informative than the unstructured set of clusters returned by flat clustering. This clustering algorithm does not require us to pre-specify the number of clusters."
+                name: "K-Mean",
+                description: "It is a method of vector quantization, originally from signal processing, that aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean (cluster centers or cluster centroid), serving as a prototype of the cluster"
             }
         ]
     }

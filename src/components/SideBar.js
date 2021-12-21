@@ -8,12 +8,13 @@ const SideBar = (props) => {
     const [button1, setbutton1] = useState('Next');
     const [button2, setbutton2] = useState('Cancel');
     const [model, setmodel] = useState('1');
+    const [modelAccuracy, setmodelAccuracy] = useState(0);
     const [selectedModel, setselectedModel] = useState(1);
     const [selectedType, setselectedType] = useState(1);
     const [selectedFile, setselectedFile] = useState(null);
     const userType = localStorage.getItem('package');
-    const userOrFiles = (localStorage.getItem('package') === 'admin') ? "Users" : "Files";
-    const adminOrMember = (localStorage.getItem('package') === 'admin') ? "Admin" : `${props.data[0]?.package} Member`;
+    const userOrFiles = (userType === 'admin') ? "Users" : "Files";
+    const adminOrMember = (userType === 'admin') ? "Admin" : `${userType} Member`;
 
     const [diagTitle, setdiagTitle] = useState("Choose Model");
     const [count, setcount] = useState(0);
@@ -65,6 +66,15 @@ const SideBar = (props) => {
 
             if (count === 6) {
                 document.getElementById('spinner').classList.add('hidden');
+            }
+
+            if ((userType === 'premium' && props.length > 18) || (userType === 'deluxe' && props.length > 12) || (userType === 'basic' && props.length > 6)) {
+                document.getElementById('testData').classList.remove('from-indigo-400', 'to-indigo-600');
+                document.getElementById('testData').classList.add('from-red-400', 'to-red-600', 'pointer-events-none');
+            }
+            else {
+                document.getElementById('testData').classList.remove('from-red-400', 'to-red-600', 'pointer-events-none');
+                document.getElementById('testData').classList.add('from-indigo-400', 'to-indigo-600');
             }
 
             if (!selectedFile && (count === 2 || count === 4)) {
@@ -123,21 +133,21 @@ const SideBar = (props) => {
             <div className="w-80 mx-2 h-full bgPattern absolute top-0 left-0 z-0"></div>
             {
                 (isOpen) ?
-                <div className="w-screen h-screen bg-gray-700 bg-opacity-40 backdrop-filter backdrop-blur-sm flex items-center justify-center absolute top-0 left-0 z-50">
-                    <div className="w-3/5 px-5 py-4 bg-white border-2 rounded-xl flex flex-col">
+                <div className="w-screen h-screen bg-gray-700 bg-opacity-30 backdrop-filter flex items-center justify-center absolute top-0 left-0 z-50">
+                    <div className="w-3/5 px-5 py-4 bg-white rounded-lg shadow-2xl flex flex-col">
                         <div className="flex flex-row items-center justify-start">
-                            <h1 className="text-gray-600 text-xl font-bold">{diagTitle}</h1>
+                            <h1 className="text-gray-600 text-xl font-bold">{diagTitle}{(modelAccuracy != 0) ? ` | Model Accuracy: ${modelAccuracy}%` : null}</h1>
                         </div>
                         <div id="modelButtons" className="mt-4 flex flex-row items-stretch justify-between">
-                            <button id="1" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-lg flex flex-col items-start justify-start overflow-y-auto" onClick={() => setmodel(1)}>
+                            <button id="1" className="w-1/3 min-h-full mr-1 px-3 py-2 border-2 rounded-md flex flex-col items-start justify-start overflow-y-auto" onClick={() => setmodel(1)}>
                                 <h1 className="text-left text-gray-600 text-lg font-bold">{title1}</h1>
                                 <p className="text-gray-600 text-left">{para1}</p>
                             </button>
-                            <button id="2" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-lg flex flex-col items-start justify-start" onClick={() => setmodel(2)}>
+                            <button id="2" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-md flex flex-col items-start justify-start" onClick={() => setmodel(2)}>
                                 <h1 className="text-left text-gray-600 text-lg font-bold">{title2}</h1>
                                 <p className="text-gray-600 text-left">{para2}</p>
                             </button>
-                            <button id="3" className="w-1/3 min-h-full mx-1 px-3 py-2 border-2 rounded-lg flex flex-col items-start justify-start" onClick={() => setmodel(3)}>
+                            <button id="3" className="w-1/3 min-h-full ml-1 px-3 py-2 border-2 rounded-md flex flex-col items-start justify-start" onClick={() => setmodel(3)}>
                                 <h1 className="text-left text-gray-600 text-lg font-bold">{title3}</h1>
                                 <p className="text-gray-600 text-left">{para3}</p>
                             </button>
@@ -163,11 +173,12 @@ const SideBar = (props) => {
                             <div id="spinner" className="w-28 h-28 mt-4 bg-no-repeat bg-center bg-contain spinnerSVG hidden animate-spin"></div>
                         </div>
                         <div className="h-full mt-3 flex flex-row items-center justify-end">
-                            <button className="ml-2 px-2 py-1 bg-gray-400 text-white rounded-md"
+                            <button className="ml-2 px-5 py-2 bg-gray-400 text-white rounded-md"
                                 onClick={() => {
                                     setisOpen(false);
                                     setmodel('1');
                                     setcount(0);
+                                    setmodelAccuracy(0);
                                     setbutton1('Next');
                                     setbutton2('Cancel');
                                     setselectedFile(null);
@@ -175,12 +186,13 @@ const SideBar = (props) => {
                                     settitle1("Regression");
                                     settitle2("Classification");
                                     settitle3("Clustering");
-                                    setpara1("Takes a group of random variables, thought to be predicting Y, and tries to find a mathematical relationship between them. This relationship is typically in the form of a straight line (linear regression) that best approximates all the individual data points");
-                                    setpara2("Process of categorizing a given setpara of data into classes, It can be performed on both structured or unstructured data. The process starts with predicting the class of given data points. It approximates the mapping function from input variables to discrete output variables");
-                                    setpara3("Involves automatically discovering natural grouping in data. Unlike supervised learning (like predictive modeling), clustering algorithms only interpret the input data and find natural groups or clusters in feature space");
+                                    setpara1("Takes a group of random variables, thought to be predicting Y, and tries to find a mathematical relationship between them. This relationship is typically in the form of a straight line (linear regression) that best approximates all the individual data points.");
+                                    setpara2("Process of categorizing a given setpara of data into classes, It can be performed on both structured or unstructured data. The process starts with predicting the class of given data points. It approximates the mapping function from input variables to discrete output variables.");
+                                    setpara3("Involves automatically discovering natural grouping in data. Unlike supervised learning (like predictive modeling), clustering algorithms only interpret the input data and find natural groups or clusters in feature space.");
+                                    props.handleCount();
                                 }}
                             >{button2}</button>
-                            <button id="next" className="ml-2 px-2 py-1 bg-indigo-600 text-white rounded-md"
+                            <button id="next" className="ml-2 px-5 py-2 bg-indigo-600 text-white rounded-md"
                                 onClick={
                                     (model === 1 && count === 0) ? 
                                     () => {
@@ -190,9 +202,9 @@ const SideBar = (props) => {
                                         settitle1("Linear");
                                         settitle2("Multiple");
                                         settitle3("Support Vector Machine");
-                                        setpara1("It is the appropriate regression analysis to conduct when the dependent variable is dichotomous (binary).  Like all regression analyses, the logistic regression is a predictive analysis");
-                                        setpara2("It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables");
-                                        setpara3("It is a form of linear regression in which the relationship between the independent variable x and dependent variable y is modelded as an nth degree polynomial");
+                                        setpara1("It is the supervised Machine Learning model in which the model finds the best fit linear line between the dependent and independent variables.");
+                                        setpara2("It is an extension of simple linear regression. It is used when we want to predict the value of a variable based on the value of two or more other variables.");
+                                        setpara3("It constructs a hyperplane or set of hyperplanes in a high- or infinite-dimensional space, which can be used for classification, regression, or other tasks like outliers detection.");
                                     } :
                                     (model === 2 && count === 0) ?
                                     () => {
@@ -201,10 +213,10 @@ const SideBar = (props) => {
                                         setdiagTitle("Choose Type");
                                         settitle1("K-Nearest Neighbour");
                                         settitle2("Naive Bayes");
-                                        settitle3("DTC");
-                                        setpara1("In feugiat massa lacus, eget tristique dolor lobortis eu. Morbi non nulla a libero laoreet luctus sit amet id lacus. Donec suscipit est vel nibh");
-                                        setpara2("It is an algorithm that stores all available cases and classifies new cases based on similar measure");
-                                        setpara3("It is the classification algorithm consisting of many decision trees");
+                                        settitle3("Decision Tree Classifier");
+                                        setpara1("It is an algorithm that stores all available cases and classifies new cases based on similar measure.");
+                                        setpara2("It is a simple technique for constructing classifiers: models that assign class labels to problem instances, represented as vectors of feature values, where the class labels are drawn from some finite set.");
+                                        setpara3("It uses a decision tree (as a predictive model) to go from observations about an item (represented in the branches) to conclusions about the item's target value (represented in the leaves).");
                                     } :
                                     (model === 3 && count === 0) ?
                                     () => {
@@ -214,9 +226,9 @@ const SideBar = (props) => {
                                         settitle1("Density Based");
                                         settitle2("Eclat");
                                         settitle3("K-Mean");
-                                        setpara1("It is the binary classification model in which output variable is assumes to be equal to a linear combination of the input variables, transformed by the logistic function");
-                                        setpara2("It is also known as top-down approach. This algorithm does not require to pre-specify the number of clusters");
-                                        setpara3("A structure that is more informative than the unstructured set of clusters returned by flat clustering. This clustering algorithm does not require us to pre-specify the number of clusters");
+                                        setpara1("It is a density-based clustering non-parametric algorithm: given a set of points in some space, it groups together points that are closely packed together, marking as outliers points that lie alone in low-density regions.");
+                                        setpara2("It is an algorithm for finding frequent item sets in a transaction or database. Eclat algorithm uses a Depth first search for discovering frequent item sets.");
+                                        setpara3("It is a method of vector quantization, originally from signal processing, that aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster.");
                                     } :
                                     (model === 1 && count === 1) ?
                                     () => {
@@ -246,7 +258,7 @@ const SideBar = (props) => {
                                         setdiagTitle("Training Model");
                                         fileData.append('file', selectedFile);
                                         fileData.append('choice', selectedModel);
-                                        fileData.append('fname', selectedFile.name)
+                                        fileData.append('fname', selectedFile.name);
                                         if (selectedModel === 1) {
                                             if (selectedType === 1) fileData.append('type', 'Regression-Linear');
                                             else if (selectedType === 2) fileData.append('type', 'Regression-Multiple');
@@ -275,6 +287,7 @@ const SideBar = (props) => {
                                             }
                                         ).then(res => {
                                             console.log(res);
+                                            setmodelAccuracy(parseFloat(res.data).toFixed(1));
                                             setcount(4);
                                             setdiagTitle("Upload Test File");
                                         }).catch(err => {
@@ -286,8 +299,26 @@ const SideBar = (props) => {
                                     () => {
                                         setcount(5);
                                         setdiagTitle("Testing File");
+                                        setmodelAccuracy(0);
                                         fileData.append('file', selectedFile);
-                                        fileData.append('secondpass', 'true');
+                                        // const secondpass=true;
+                                        fileData.append('choice', '4');
+                                        fileData.append('fname', selectedFile.name);
+                                        if (selectedModel === 1) {
+                                            if (selectedType === 1) fileData.append('type', 'Regression-Linear');
+                                            else if (selectedType === 2) fileData.append('type', 'Regression-Multiple');
+                                            else fileData.append('type', 'Regression-SVM');
+                                        }
+                                        else if (selectedModel === 2) {
+                                            if (selectedType === 1) fileData.append('type', 'Classification-KNN');
+                                            else if (selectedType === 2) fileData.append('type', 'Classification-Naive_Bayes');
+                                            else fileData.append('type', 'Classification-DTC');
+                                        }
+                                        else {
+                                            if (selectedType === 1) fileData.append('type', 'Clustering-Density_Based');
+                                            else if (selectedType === 2) fileData.append('type', 'Clustering-Eclat');
+                                            else fileData.append('type', 'Clustering-K_Mean');
+                                        }
                                         axios.post (
                                             'http://127.0.0.1:8000/auth/upload/',
                                             fileData,
@@ -302,6 +333,7 @@ const SideBar = (props) => {
                                             setbutton2('Exit'); // move these lines to .then
                                             setcount(6);
                                             setdiagTitle("File Successfully Tested");
+                                            props.handleCount();
                                         }).catch(err => {
                                             console.log(err);
                                             setbutton2('Exit');
@@ -312,8 +344,7 @@ const SideBar = (props) => {
                             >{button1}</button>
                         </div>
                     </div>
-                </div> :
-                null
+                </div> : null
             }
         </>
     )

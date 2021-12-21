@@ -9,9 +9,10 @@ const Files = (props) => {
             </div>
             <div id="files" className="w-full h-full pt-20 pb-6 flex flex-col overflow-scroll">
                 {
-                    (props.data.length !== 0) ? props.data.map((item, index) => {
+                    (props.data && props.data.length !== 0) ? props.data.map((item, index) => {
                         return <FileCard key={index} file={item}/>
                     }) :
+                    (props.data && props.data.length === 0) ? <p className="text-center text-gray-400 text-xl font-semibold">No files tested!</p> :
                     <div className="ml-7 mr-2">
                             <div className="w-full h-16 mb-2 bg-gray-300 opacity-100 rounded-md animate-pulse"></div>
                             <div className="w-full h-16 mb-2 bg-gray-300 opacity-50 rounded-md animate-pulse"></div>

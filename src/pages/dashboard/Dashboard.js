@@ -16,6 +16,7 @@ let request = axios.create({
 });
 
 const Dashboard = () => {
+    const [count, setcount] = useState(0);
     const [user, setuser] = useState([
         {
             userID: 0,
@@ -25,41 +26,32 @@ const Dashboard = () => {
         }
     ]);
 
-    const [files, setfiles] = useState([
-        // {
-        //     name: "Myfile 1",
-        //     algo: "linear regression",
-        //     accuracy: 90,
-        //     size: 3
-        // },
-        // {
-        //     name: "Myfile 2",
-        //     algo: "linear regression",
-        //     accuracy:67,
-        //     size: 1.3
-        // }
-    ]);
+    const [files, setfiles] = useState(null);
 
     const [activity, setactivity] = useState([
-        // {
-        //     aName: "Models Used",
-        //     value: [
-        //         {name: 'Reg', value: 5},
-        //         {name: 'Clu', value: 1},
-        //         {name: 'Cla', value: 3}
-        //     ]
-        // },
-        // {
-        //     aName: "Most Used Model",
-        //     value: "Linear Regression"
-        // },
-        // {
-        //     aName: "Most Accurate Data",
-        //     value: "Myfile 1 with 90% accuracy"
-        // }
+        {
+            aName: "Models Used",
+            value: [
+                {name: 'Reg', value: 5},
+                {name: 'Clu', value: 1},
+                {name: 'Cla', value: 3}
+            ]
+        },
+        {
+            aName: "Most Used Model",
+            value: "Linear Regression"
+        },
+        {
+            aName: "Most Accurate Data",
+            value: "Myfile 1 with 90% accuracy"
+        }
     ]);
     
     let history = useHistory();
+
+    const handleCount = () => {
+        setcount(count+1);
+    }
 
     useEffect(async () => {
         if (localStorage.getItem('loggedIn') === 'false') {
@@ -75,26 +67,24 @@ const Dashboard = () => {
         }
 
         try {
-            let res = await request.get('something', {
+            let res = await request.get('auth/upload/', {
                 headers: {
-                    "Authorization": `${localStorage.getItem('token')}`
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
             });
-
-            setuser(res.data.user);
-            setfiles(res.data.files);
-            setactivity(res.data.activity);
+            console.log(res.data);
+            setfiles(res.data);
         }
         catch (e) {
-            // alert("Please check your internet connection!");
+            alert("Please check your internet connection!");
         }
-    }, []);
+    }, [count]);
 
     return (
         <div className="w-screen h-screen flex flex-col">
             <NavBar />
             <div id="dashboard" className="w-screen h-full flex flex-row overflow-hidden">
-                <SideBar data={user} length={files.length}/>
+                <SideBar data={user} length={files ? files.length : 0} handleCount={handleCount}/>
                 <div className="h-full bg-gray-100 flex-grow relative z-10">
                     {
                         <Files data={files}/>

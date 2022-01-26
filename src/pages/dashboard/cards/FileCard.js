@@ -6,7 +6,7 @@ const FileCard = (props) => {
         <div className="ml-7 mr-2 mb-2 px-4 py-2 bg-white rounded-md shadow-lg flex flex-row justify-between">
             <div>
                 <h1 className="text-gray-700 text-base tracking-wide">{props.file.f_name}</h1>
-                <p className="text-gray-400">Uploaded 3 hrs ago • {parseFloat(props.file.size).toFixed(1)} MB</p>
+                <p className="text-gray-400">{props.file.timestamp} • {parseFloat(props.file.size).toFixed(1)} MB</p>
             </div>
             <div className="ml-2 text-gray-400 flex-grow flex flex-col items-end justify-center">
                 <p className="text-right"><span className="mr-2 text-indigo-500 font-bold">{props.file.accuracy?props.file.accuracy:0}%</span>accurate</p>

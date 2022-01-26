@@ -78,19 +78,19 @@ const SideBar = (props) => {
             }
 
             if (!selectedFile && (count === 2 || count === 4)) {
-                document.getElementById('next').classList.remove('bg-indigo-600');
-                document.getElementById('next').classList.add('bg-gray-400', 'pointer-events-none');
+                document.getElementById('next').classList.remove('from-indigo-400', 'to-indigo-600');
+                document.getElementById('next').classList.add('from-gray-400', 'to-gray-600', 'pointer-events-none');
             }
             else if (selectedFile && (count === 2 || count === 4)) {
-                document.getElementById('next').classList.remove('bg-gray-400', 'pointer-events-none');
-                document.getElementById('next').classList.add('bg-indigo-600');
+                document.getElementById('next').classList.remove('from-gray-400','to-gray-600', 'pointer-events-none');
+                document.getElementById('next').classList.add('from-indigo-400', 'to-indigo-600');
             }
         }, [model, count, selectedFile]
     )
 
     return (
         <>
-            <div className="w-80 h-full border-r-2 bg-gradient-to-t from-transparent via-white to-white flex flex-col relative z-10">
+            <div className="w-80 h-full border-r bg-gradient-to-t from-transparent via-white to-white flex flex-col relative z-10">
                 <div className="h-24 px-7 flex flex-row items-center justify-start">
                     {
                         (props.data[0]) ?
@@ -173,7 +173,7 @@ const SideBar = (props) => {
                             <div id="spinner" className="w-28 h-28 mt-4 bg-no-repeat bg-center bg-contain spinnerSVG hidden animate-spin"></div>
                         </div>
                         <div className="h-full mt-3 flex flex-row items-center justify-end">
-                            <button className="ml-2 px-5 py-2 bg-gray-400 text-white rounded-md"
+                            <button className="ml-2 px-5 py-2 text-indigo-600 rounded-md shadow-md hover:bg-indigo-100 transition-all"
                                 onClick={() => {
                                     setisOpen(false);
                                     setmodel('1');
@@ -192,7 +192,7 @@ const SideBar = (props) => {
                                     props.handleCount();
                                 }}
                             >{button2}</button>
-                            <button id="next" className="ml-2 px-5 py-2 bg-indigo-600 text-white rounded-md"
+                            <button id="next" className="ml-2 px-5 py-2 bg-gradient-to-br from-indigo-400 to-indigo-600  text-white rounded-md shadow-md"
                                 onClick={
                                     (model === 1 && count === 0) ? 
                                     () => {

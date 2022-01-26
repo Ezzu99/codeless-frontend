@@ -76,7 +76,7 @@ const Dashboard = () => {
             setfiles(res.data);
         }
         catch (e) {
-            alert("Please check your internet connection!");
+            alert("Please check your internet connection or login again!");
         }
     }, [count]);
 

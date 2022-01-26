@@ -61,12 +61,10 @@ const Login = () => {
             });
             console.log(res);
             localStorage.setItem('loggedIn', 'true');
-            // localStorage.setItem('package', 'member');   //instead of 'admin' should be JSON.stringify(res.data.package)
             localStorage.setItem('token', res.data.access);
         }
         catch (e) {
             alert('Incorrect email or password!');
-            // (localStorage.getItem('package') === 'admin') ? history.push('/admin/dashboard') : history.push('/dashboard');
             submitButton.disabled = false;
             submitButton.classList.remove('bg-gray-400', 'pointer-events-none');
             submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'focus:ring-2');
